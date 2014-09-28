@@ -1,0 +1,26 @@
+{
+  "name": "chatsy",
+  "version": "1.0.0",
+  "description": "Simple light anonymous chat",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "chat"
+  ],
+  "authors": [
+    "devmaestro"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "semantic": "~0.19.3"
+  }
+}

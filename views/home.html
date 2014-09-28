@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+<link href="/semantic.min.css" rel="stylesheet" type="text/css"/>
+<link href="/chatsy.css" rel="stylesheet" type="text/css"/>
+</head>
+<body class="fonts-default">
+	<div class="ui button" id="browsegroups-button">
+		Browse groups
+	</div>
+	<div class="ui button" id="creategroup-button">
+		Create a group
+	</div>
+	<div class="ui button" id="changealias-button">
+		Change alias
+	</div>
+
+	<div class="ui modal" id="creategroup-modal">
+		<div class="header">
+			Create a Group
+		</div>
+		<div class="content">
+			<div class="ui fluid input">
+				<input type="text" id="creategroup-name-input" placeholder="Name"/>
+			</div>
+			<div class="ui fluid input top-marginned">
+				<input type="text" id="creategroup-description-input" placeholder="Description"/>
+			</div>
+			<div class="ui fluid input top-marginned">
+				<input type="password" id="creategroup-key-input" placeholder="Pass Key"/>
+			</div>
+		</div>
+		<div class="actions">
+			<div class="ui large teal button" id="creategroup-modal-submit">
+				Create
+			</div>
+		</div>
+	</div>
+</body>
+<script src="/jquery.min.js" type="text/javascript"></script>
+<script src="/semantic.min.js" type="text/javascript"></script>
+<script>
+	$('#creategroup-button').click(function() {
+		$('#creategroup-modal').modal('show');
+	});
+	$('#creategroup-modal-submit').click(function() {
+		$.ajax({
+			type: 'POST',
+			url: '/groups/create',
+			data: {
+				'alias':$('#alias-input').val(),
+				'name':$('#alias-input').val(),
+				'description':$('#alias-input').val(),
+				'key':$('#alias-input').val(),
+			},
+			success: function(data, status, jqXHR) {
+				if(status === "success") {
+					window.location.href = '/home';
+				} else {
+					//Error handling
+				}
+			}		
+		});
+	});
+</script>
+</html>
