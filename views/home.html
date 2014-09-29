@@ -45,23 +45,33 @@
 		$('#creategroup-modal').modal('show');
 	});
 	$('#creategroup-modal-submit').click(function() {
+		var cookies = str_obj(document.cookie);
 		$.ajax({
 			type: 'POST',
 			url: '/groups/create',
 			data: {
-				'alias':$('#alias-input').val(),
-				'name':$('#alias-input').val(),
-				'description':$('#alias-input').val(),
-				'key':$('#alias-input').val(),
+				'alias':cookies['alias'],
+				'name':$('#creategroup-name-input').val(),
+				'description':$('#creategroup-description-input').val(),
+				'key':$('#creategroup-key-input').val(),
 			},
 			success: function(data, status, jqXHR) {
 				if(status === "success") {
-					window.location.href = '/home';
+					$('#creategroup-modal').modal('hide');
 				} else {
 					//Error handling
 				}
 			}		
 		});
 	});
+	function str_obj(str) {
+    str = str.split(', ');
+    var result = {};
+    for (var i = 0; i < str.length; i++) {
+        var cur = str[i].split('=');
+        result[cur[0]] = cur[1];
+    }
+    return result;
+}
 </script>
 </html>

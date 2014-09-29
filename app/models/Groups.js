@@ -2,10 +2,10 @@ var mongoose = require('mongoose'),
 	schema = mongoose.Schema,
 	bcrypt = require('bcrypt');
 	
-var groupsSchema = new Schema({
+var groupsSchema = new schema({
 	name : {type: String, required: true},
 	description : {type: String, required: false},
-	startedBy : {type: String, required: false},
+	createdBy : {type: String, required: false},
 	visibility : {type: String},
 	members : {type: Array, default: []},
 	key : {type: String, default: null}

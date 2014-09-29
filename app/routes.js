@@ -1,3 +1,5 @@
+var groups = require('../app/models/Groups');
+
 module.exports = function(server) {
 	//GET routes
 	//general
@@ -17,6 +19,19 @@ module.exports = function(server) {
 	server.route({
 		method: 'GET',
 		path: '/home',
+		handler: function(request, reply) {
+			if(request.state['alias'] == undefined) {
+				//User not logged in
+				reply.file('./views/index.html');
+			} else {
+				//User logged in
+				reply.file('./views/home.html');
+			}
+		}
+	});
+	server.route({
+		method: 'GET',
+		path: '/groups',
 		handler: function(request, reply) {
 			if(request.state['alias'] == undefined) {
 				//User not logged in
@@ -98,4 +113,28 @@ module.exports = function(server) {
 			}
 		}
 	});
+	server.route({
+		method: 'POST',
+		path: '/groups/create',
+		handler: function(request, reply) {
+			console.log(request.payload);
+			if(request.payload.alias != undefined) {
+				var newGroup = new groups();
+				newGroup.name = request.payload.name;
+				newGroup.description = request.payload.description;
+				newGroup.key = newGroup.generateHash(request.payload.key);
+				newGroup.createdBy = request.payload.alias;
+				newGroup.save(function(err) {
+					if(err) {
+						reply(err.message);
+					} else {
+						reply("Success");
+					}
+				});				
+			} else {
+				reply("Error");
+			}
+		}
+	});
+	
 };
