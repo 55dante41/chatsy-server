@@ -18,7 +18,7 @@
   "author": "devmaestro",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^0.8.0",
+    "bcrypt-nodejs": "latest",
     "bower": "^1.3.11",
     "e": "0.0.4",
     "grunt-cli": "^0.1.13",
