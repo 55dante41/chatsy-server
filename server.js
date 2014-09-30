@@ -7,7 +7,7 @@ var routes = require('./app/routes'),
 
 mongoose.connect(configDB.url);
 mongoose.connection.on('disconnected', function() { console.log("disconnected from db...");});
-var server = hapi.createServer('localhost', 3000);
+var server = hapi.createServer('localhost', 1243);
 routes(server);
 server.start(function() {
 	console.log('Server started on port 3000');

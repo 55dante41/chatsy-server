@@ -1,19 +1,17 @@
 var mongoose = require('mongoose'),
 	schema = mongoose.Schema,
-	bcrypt = require('bcrypt');
+	bcrypt = require('bcrypt-nodejs');
 	
 var groupsSchema = new schema({
 	name : {type: String, required: true},
 	description : {type: String, required: false},
 	createdBy : {type: String, required: false},
-	visibility : {type: String},
-	members : {type: Array, default: []},
-	key : {type: String, default: null}
+	visibility : {type: String}
 });
 
 //Generate a hash for the key
 groupsSchema.methods.generateHash = function(key) {
-	return bcrypt.hashSync(key, bcrypt.genSaltSync(8), null);
+	return bcrypt.hashSync(key, bcrypt.genSaltSync(8));
 };
 
 //Validate key
