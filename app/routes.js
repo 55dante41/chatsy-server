@@ -1,4 +1,4 @@
-var groups = require('../app/models/Groups');
+var Groups = require('../app/models/Groups');
 
 module.exports = function(server) {
 	//GET routes
@@ -38,7 +38,10 @@ module.exports = function(server) {
 				reply.file('./views/index.html');
 			} else {
 				//User logged in
-				reply.file('./views/home.html');
+				var groups = {};
+				Groups.find({},function(err, users) {
+					reply(users);
+				});
 			}
 		}
 	});
@@ -100,6 +103,7 @@ module.exports = function(server) {
 		}
 	});
 	
+	//-----------------------------------------------------------------------
 	//POST routes
 	//general
 	server.route({
@@ -117,9 +121,8 @@ module.exports = function(server) {
 		method: 'POST',
 		path: '/groups/create',
 		handler: function(request, reply) {
-			console.log(request.payload);
 			if(request.payload.alias != undefined) {
-				var newGroup = new groups();
+				var newGroup = new Groups();
 				newGroup.name = request.payload.name;
 				newGroup.description = request.payload.description;
 				newGroup.key = newGroup.generateHash(request.payload.key);

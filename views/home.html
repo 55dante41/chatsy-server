@@ -15,6 +15,9 @@
 	<div class="ui button" id="changealias-button">
 		Change alias
 	</div>
+	<div style="display: none" id="browsegroups-list">
+		
+	</div>
 
 	<div class="ui modal" id="creategroup-modal">
 		<div class="header">
@@ -61,6 +64,20 @@
 				} else {
 					//Error handling
 				}
+			}		
+		});
+	});
+	$('#browsegroups-button').click(function() {
+		$('#browsegroups-list').empty();
+		$.ajax({
+			type: 'GET',
+			url: '/groups',
+			success: function(data, status, jqXHR) {
+				for(var i=0;i<data.length;i++) {
+					var element = "<div class=\"ui six column row\"><p class=\"ui four column row header\">"+data[i].name+"</p><div class=\"ui two column row button teal\">Join Group</div><p>"+data[i].description+"</p></div><div class=\"ui divider\"></div>";
+					$('#browsegroups-list').append(element);
+				}
+				$('#browsegroups-list').show();
 			}		
 		});
 	});
