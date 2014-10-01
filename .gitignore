@@ -29,4 +29,4 @@ iisnode
 .lock-wscript
 
 # Windows nodejs files
-.config
+*.config
