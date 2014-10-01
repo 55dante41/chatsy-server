@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+		<link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+		<link href="/semantic.min.css" rel="stylesheet" type="text/css"/>
+	<link href="/chatsy.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body class="fonts-default">
+		<div class="ui header">
+			You are in group : {{name}}
+		</div>
+		<div id="values-container" style="display: none">
+			<div id="values-groupid">{{groupId}}</div>
+		</div>
+		<div id="chat-message" style="height: 500px; overflow-y: auto">
+		
+		</div>
+		<div id="ui massive chat-inputcontainer">
+			<textarea id="chat-input" rows="5" cols="50"></textarea>
+		</div>
+		<div class="ui massive button" id="socket-button">Test</div>
+    </body>
+</html>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/jquery.min.js" type="text/javascript"></script>
+<script src="/semantic.min.js" type="text/javascript"></script>
+
+<script>
+	var socket = io();
+	var cookies = str_obj(document.cookie);
+	socket.on('connect', function ()
+	{
+		socket.emit('join', $('#values-groupid').text());
+	});
+	socket.on('send message', function (data)
+	{
+		console.log(data);
+		$('#chat-message').append('<div class=\"ui header\">' + data.sender + ': ' + data.message + '</div>')
+	});
+	$('#socket-button').click(function ()
+	{
+		socket.emit('send message', { 'message': $('#chat-input').val(), 'groupId': $('#values-groupid').text(), 'sender': cookies['alias'] });
+		$('#chat-input').val('');
+	})
+	function str_obj(str)
+	{
+		str = str.split(', ');
+		var result = {};
+		for (var i = 0; i < str.length; i++)
+		{
+			var cur = str[i].split('=');
+			result[cur[0]] = cur[1];
+		}
+		return result;
+	}
+</script>
