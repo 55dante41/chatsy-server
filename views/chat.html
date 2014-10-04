@@ -6,22 +6,30 @@
         <title></title>
 		<link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
 		<link href="/semantic.min.css" rel="stylesheet" type="text/css"/>
-	<link href="/chatsy.css" rel="stylesheet" type="text/css"/>
+		<style>
+			.ui.grid {
+				margin: 0 0 0 -1.5%;
+  			}
+			.ui.grid>.column {
+				margin-top: 0rem;
+				margin-bottom: 0rem;
+  			}
+		</style>
+		<link href="/chatsy.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body class="fonts-default">
-		<div class="ui header">
+    <body class="fonts-default" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0">
+		<div class="ui header" style="height: 4%">
 			You are in group : {{name}}
 		</div>
 		<div id="values-container" style="display: none">
 			<div id="values-groupid">{{groupId}}</div>
 		</div>
-		<div id="chat-message" style="height: 500px; overflow-y: auto">
+		<div id="chat-message" style="height: 87%; width: 75%; overflow-y: auto;word-wrap: break-word">
 		
 		</div>
-		<div id="ui massive chat-inputcontainer">
-			<textarea id="chat-input" rows="5" cols="50"></textarea>
-		</div>
-		<div class="ui massive button" id="socket-button">Test</div>
+		<div id="ui massive chat-inputcontainer" style="width: 75%;height: 5%">
+			<textarea id="chat-input" style="resize: none; height: 100%;width: 100%" rows="3"></textarea>
+		</div>		
     </body>
 </html>
 <script src="/socket.io/socket.io.js"></script>
@@ -38,13 +46,20 @@
 	socket.on('send message', function (data)
 	{
 		console.log(data);
-		$('#chat-message').append('<div class=\"ui header\">' + data.sender + ': ' + data.message + '</div>')
+		$('#chat-message').append('<div class=\"ui grid\"><div class=\"two wide column\">' + data.sender + ':</div><div class=\"fourteen wide column\">' + data.message.replace('\n', '<br/>') + '</div></div>');
 	});
-	$('#socket-button').click(function ()
+	$('#chat-input').keydown(function (e)
 	{
-		socket.emit('send message', { 'message': $('#chat-input').val(), 'groupId': $('#values-groupid').text(), 'sender': cookies['alias'] });
-		$('#chat-input').val('');
-	})
+		if (e.keyCode == 13 && !e.shiftKey)
+		{
+			e.preventDefault();
+			if ($('#chat-input').val() != '')
+			{
+				socket.emit('send message', { 'message': $('#chat-input').val(), 'groupId': $('#values-groupid').text(), 'sender': cookies['alias'] });
+				$('#chat-input').val('');
+			}
+		}
+	});
 	function str_obj(str)
 	{
 		str = str.split(', ');

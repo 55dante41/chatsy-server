@@ -1,4 +1,5 @@
-var Groups = require('../app/models/Groups');
+var Groups = require('../app/models/Groups'),
+	Crypter = require('../app/utils/crypting');
 
 module.exports = function (server)
 {
@@ -62,10 +63,17 @@ module.exports = function (server)
 		path: '/groups/{id}',
 		handler: function (request, reply)
 		{
-			Groups.find({ _id: request.params.id }, function (err, result)
+			if(request.state['alias']==undefined) 
 			{
-				reply.view('chat', { name: result[0].name, groupId: result[0]._id });
-			});
+				//User not logged in
+				reply.file('./views/index.html');
+			} else 
+			{
+				Groups.find({ _id: request.params.id }, function (err, result)
+				{
+					reply.view('chat', { name: result[0].name, groupId: result[0]._id });
+				});	
+			}			
 		}
 	});
 	
@@ -145,7 +153,7 @@ module.exports = function (server)
 		{
 			if (request.payload.alias != undefined)
 			{
-				reply("Success").state('alias', request.payload.alias);
+				reply("Success").state('alias', Crypter.encrypt(request.payload.alias));
 			} else
 			{
 				reply("Error");
@@ -163,7 +171,7 @@ module.exports = function (server)
 				newGroup.name = request.payload.name;
 				newGroup.description = request.payload.description;
 				newGroup.key = newGroup.generateHash(request.payload.key);
-				newGroup.createdBy = request.payload.alias;
+				newGroup.createdBy = Crypter.decrypt(request.payload.alias);
 				newGroup.save(function (err)
 				{
 					if (err)
