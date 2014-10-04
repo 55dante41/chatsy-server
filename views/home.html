@@ -28,10 +28,17 @@
 				<input type="text" id="creategroup-name-input" placeholder="Name"/>
 			</div>
 			<div class="ui fluid input top-marginned">
-				<input type="text" id="creategroup-description-input" placeholder="Description"/>
+				<input type="text" id="creategroup-description-input" placeholder="Description" style="resize: none; width: 100%"></textarea>
+			</div>
+			<div class="ui large checkbox top-marginned">
+				<input type="checkbox" id="privacy-checkbox">
+				<label for="privacy-checkbox">This is a private group</label>
 			</div>
 			<div class="ui fluid input top-marginned">
 				<input type="password" id="creategroup-key-input" placeholder="Pass Key"/>
+			</div>
+			<div class="ui red message">
+				Leaving the Pass Key empty makes the group public.
 			</div>
 		</div>
 		<div class="actions">

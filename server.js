@@ -5,7 +5,8 @@ var hapi = require('hapi'),
 	socketio = require('socket.io');
 //Require Imports
 var routes = require('./app/routes'),
-	configDB = require('./config/database.js');
+	configDB = require('./config/database.js'),
+	Crypter = require('./app/utils/crypting.js');
 
 mongoose.connect(configDB.url);
 mongoose.connection.on('disconnected', function() { console.log("disconnected from db...");});
@@ -41,12 +42,12 @@ server.start(function ()
 			}
 			socket.join(groupId, function ()
 			{
-				
+
 			});
 		});
 		socket.on('send message', function (data)
 		{
-			io.sockets.in(data.groupId).emit('send message', { 'message': data.message, 'sender': data.sender });			
+			io.sockets. in (data.groupId).emit('send message', { 'message': data.message, 'sender': Crypter.decrypt(data.sender) });
 		})
 	});
 
