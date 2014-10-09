@@ -17,7 +17,16 @@ module.exports = function (server)
 			} else
 			{
 				//User logged in
-				reply.file('./views/home.html');
+				var groups = {};
+				Groups.find({ 'isVisible': true }, function (err, groups)
+				{
+					if (err)
+					{
+						reply("Server Error");
+						return;
+					}
+					reply.view('home', groups);
+				});
 			}
 		}
 	});
@@ -33,7 +42,16 @@ module.exports = function (server)
 			} else
 			{
 				//User logged in
-				reply.file('./views/home.html');
+				var groups = {};
+				Groups.find({ 'isVisible': true }, function (err, groups)
+				{
+					if (err)
+					{
+						reply("Server Error");
+						return;
+					}
+					reply.view('home', { 'groups': groups });
+				});
 			}
 		}
 	});
@@ -50,7 +68,7 @@ module.exports = function (server)
 			{
 				//User logged in
 				var groups = {};
-				Groups.find({}, function (err, groups)
+				Groups.find({ 'isVisible': true }, function (err, groups)
 				{
 					reply(groups);
 				});
@@ -63,20 +81,27 @@ module.exports = function (server)
 		path: '/groups/{id}',
 		handler: function (request, reply)
 		{
-			if(request.state['alias']==undefined) 
+			if (request.state['alias'] == undefined)
 			{
 				//User not logged in
 				reply.file('./views/index.html');
-			} else 
+			} else
 			{
 				Groups.find({ _id: request.params.id }, function (err, result)
 				{
 					reply.view('chat', { name: result[0].name, groupId: result[0]._id });
-				});	
-			}			
+				});
+			}
 		}
 	});
-	
+	server.route({
+		method: 'GET',
+		path: '/home.js',
+		handler: function (request, reply)
+		{
+			reply.file('./public/scripts/home.js');
+		}
+	});
 	//resources
 	server.route({
 		method: 'GET',
@@ -170,8 +195,10 @@ module.exports = function (server)
 				var newGroup = new Groups();
 				newGroup.name = request.payload.name;
 				newGroup.description = request.payload.description;
-				newGroup.key = newGroup.generateHash(request.payload.key);
+				newGroup.passkey = newGroup.generateHash(request.payload.key);
 				newGroup.createdBy = Crypter.decrypt(request.payload.alias);
+				newGroup.isPrivate = request.payload.isPrivate;
+				newGroup.isVisible = request.payload.isVisible;
 				newGroup.save(function (err)
 				{
 					if (err)

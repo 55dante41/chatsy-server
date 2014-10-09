@@ -5,8 +5,10 @@ var mongoose = require('mongoose'),
 var groupsSchema = new schema({
 	name : {type: String, required: true},
 	description : {type: String, required: false},
+	passkey : {type: String},
 	createdBy : {type: String, required: false},
-	visibility : {type: String}
+	isPrivate : {type: Boolean},
+	isVisible : {type: Boolean}
 });
 
 //Generate a hash for the key
