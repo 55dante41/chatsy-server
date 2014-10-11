@@ -17,19 +17,22 @@
 		</style>
 		<link href="/chatsy.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body class="fonts-default" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0">
-		<div class="ui header" style="height: 4%">
-			You are in group : {{name}}
+    <body class="fonts-default" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: 0">
+		<div class="ui inverted" id="header" style="width: 100%; height: 50px; background-color: #000; color: #fff">
+		<a href="/home" style="font-size: 40px; text-decoration: none; padding: 2px"><span style="color: #ffd800;font-weight: bolder">chat</span><span style="color: #b6ff00; font-weight: bold">sy</span></a>
+		alpha
+	</div>
+		<div style="height:89%; padding: 1% 1% 0% 1%">
+		<div style="height: 4%">
+			<span style="font-size: 20px">You joined the group: </span><span style="font-size:20px;font-weight: bold;color: #b6ff00">{{name}}</span>
 		</div>
-		<div id="values-container" style="display: none">
-			<div id="values-groupid">{{groupId}}</div>
-		</div>
-		<div id="chat-message" style="height: 87%; width: 75%; overflow-y: auto;word-wrap: break-word">
+		<div id="chat-message" style="height: 89%; width: 75%; overflow-y: auto;word-wrap: break-word">
 		
 		</div>
-		<div id="ui massive chat-inputcontainer" style="width: 75%;height: 5%">
+		<div id="ui massive chat-inputcontainer" style="width: 75%;height: 6%">
 			<textarea id="chat-input" style="resize: none; height: 100%;width: 100%" rows="3"></textarea>
-		</div>		
+		</div>
+			</div>		
     </body>
 </html>
 <script src="/socket.io/socket.io.js"></script>
@@ -39,9 +42,11 @@
 <script>
 	var socket = io();
 	var cookies = str_obj(document.cookie);
+	var url = document.URL.split('/');
+	var groupId = url[url.length - 1];
 	socket.on('connect', function ()
 	{
-		socket.emit('join', $('#values-groupid').text());
+		socket.emit('join', groupId);
 	});
 	socket.on('send message', function (data)
 	{
@@ -55,7 +60,7 @@
 			e.preventDefault();
 			if ($('#chat-input').val() != '')
 			{
-				socket.emit('send message', { 'message': $('#chat-input').val(), 'groupId': $('#values-groupid').text(), 'sender': cookies['alias'] });
+				socket.emit('send message', { 'message': $('#chat-input').val(), 'groupId': groupId, 'sender': cookies['alias'] });
 				$('#chat-input').val('');
 			}
 		}
