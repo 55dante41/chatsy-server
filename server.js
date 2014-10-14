@@ -25,7 +25,7 @@ var serverOptions =
 }
 var host = 'localhost';
 var port = Number(process.env.PORT || 5000);
-var server = hapi.createServer('localhost', port, serverOptions);
+var server = hapi.createServer(port, serverOptions);
 routes(server);
 
 var groups = {};
