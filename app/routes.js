@@ -215,5 +215,34 @@ module.exports = function (server)
 			}
 		}
 	});
+	server.route(
+	{
+		method: 'POST',
+		path: '/joinauth',
+		handler: function (request, reply)
+		{
+			if (request.state['alias'] == undefined)
+			{
+				//User not logged in
+				reply.file('./views/index.html');
+			} else
+			{
+				Groups.find({ _id: request.payload.groupId }, function (err, result)
+				{
+					if (err)
+					{
+						return;
+					}
+					if (result[0].validateKey(request.payload.passkey))
+					{
+						reply.redirect('chat', { name: result[0].name, groupId: result[0]._id });
+					} else
+					{
+						reply.redirect('/home');
+					}
+				});
+			}
+		}
+	})
 
 };
