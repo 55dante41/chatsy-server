@@ -18,7 +18,7 @@ groupsSchema.methods.generateHash = function(key) {
 
 //Validate key
 groupsSchema.methods.validateKey = function(key) {
-	return bcrypt.compareSync(key, this.key);
+	return bcrypt.compareSync(key, this.passkey);
 };
 
 module.exports = mongoose.model('Groups', groupsSchema);

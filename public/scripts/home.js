@@ -10,14 +10,26 @@ $('document').ready(function ()
 	{
 		$(this).click(function ()
 		{
-			if($('#joingroup-'+$(this).attr('id').split('-')[1]+'-passkey-input').length == 0) 
+			if ($('#joingroup-' + $(this).attr('id').split('-')[1] + '-passkey-input').length == 0)
 			{
 				window.location.href = "/groups/" + $(this).attr('id').split('-')[1];
-			} 
-			{
-			
 			}
-			
+			{
+				$.ajax(
+				{
+					url: '/joinauth',
+					type: 'POST',
+					data: {
+						'groupId': $(this).attr('id').split('-')[1],
+						'passkey': $('#joingroup-' + $(this).attr('id').split('-')[1] + '-passkey-input').val()
+					},
+					success: function (data, status, jqXHR)
+					{
+						//window.location.href = "/joinauth";
+					}
+				});
+			}
+
 		});
 	});
 });
