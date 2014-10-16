@@ -15,6 +15,10 @@
     "nsfw",
     "categories"
   ],
+  "repository":{
+	"type": "git",
+	"url": "https://github.com/devmaestro/chatsy-alpha.git"
+  },
   "author": "devmaestro",
   "license": "MIT",
   "dependencies": {
@@ -26,6 +30,7 @@
     "hapi": "^6.9.0",
     "mongoose": "^3.8.16",
     "node-debug": "^0.1.0",
+    "orchestrate": "^0.3.12",
     "socket.io": "^1.1.0"
   }
 }
