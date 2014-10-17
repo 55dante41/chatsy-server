@@ -100,6 +100,25 @@ $('#creategroup-modal-submit').click(function ()
 	});
 });
 
+$('#createdgroups-button').click(function ()
+{
+	console.log('clicked');
+	var cookies = str_obj(document.cookie);
+	$.ajax(
+	{
+		url: '/groups/created',
+		type: 'POST',
+		data:
+		{
+			'alias': cookies['alias']
+		},
+		success: function (data, status, jqXHR)
+		{
+			console.log(data[0]);
+		}
+	});
+});
+
 $('#browsegroups-button').click(function ()
 {
 	window.location.href = "/home";
