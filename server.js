@@ -2,7 +2,8 @@
 var hapi = require('hapi'),
 	mongoose = require('mongoose'),
 	Path =  require('path'),
-	socketio = require('socket.io');
+	socketio = require('socket.io'),
+	orchestrate = require('orchestrate')('2bfb3d34-cfd7-4649-b0dc-80c31b391ed9');
 //Require Imports
 var routes = require('./app/routes'),
 	configDB = require('./config/database.js'),
@@ -10,6 +11,16 @@ var routes = require('./app/routes'),
 
 mongoose.connect(configDB.url);
 mongoose.connection.on('disconnected', function() { console.log("disconnected from db...");});
+
+orchestrate.ping()
+.then(function() 
+{
+	console.log("Orchestrate ping successful");
+})
+.fail(function(err) 
+{
+	console.log("Orchestrate ping failed");
+})
 
 var serverOptions = 
 {
