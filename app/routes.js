@@ -77,6 +77,28 @@ module.exports = function (server)
 	});
 	server.route(
 	{
+		method: 'POST',
+		path: '/groups/created',
+		handler: function (request, reply)
+		{
+			if (request.payload.alias != undefined)
+			{
+				console.log(request.payload);
+				Groups.find({ 'createdBy': Crypter.decrypt(request.payload.alias) }, function (err, result)
+				{
+					if (err)
+					{
+						console.log(err);
+						reply("Query failed");
+						return;
+					}
+					reply(result);
+				});
+			}
+		}
+	});
+	server.route(
+	{
 		method: 'GET',
 		path: '/groups/{id}',
 		handler: function (request, reply)
