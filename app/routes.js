@@ -1,5 +1,6 @@
 var Groups = require('../app/models/Groups'),
-	Crypter = require('../app/utils/crypting');
+	Crypter = require('../app/utils/crypting'),
+	Users = require('../app/models/Users');
 
 module.exports = function (server)
 {
@@ -200,7 +201,33 @@ module.exports = function (server)
 		{
 			if (request.payload.alias != undefined)
 			{
-				reply("Success").state('alias', Crypter.encrypt(request.payload.alias));
+				console.log(request.payload.alias);
+				Users.find({ alias: request.payload.alias }, function (err, result)
+				{
+					console.log(result.length);
+					if (result.length > 0)
+					{
+						reply("Failed - Alias already exists");
+					} else
+					{
+						var newUser = new Users();
+						newUser.alias = request.payload.alias;
+						newUser.isPersistent = false;
+						newUser.save(function (err)
+						{
+							if (err)
+							{
+								console.log(err);
+								reply("Failed - Server error");
+							} else
+							{
+
+								reply("Success").state('alias', Crypter.encrypt(request.payload.alias));
+							}
+						});
+					}
+				});
+
 			} else
 			{
 				reply("Error");
