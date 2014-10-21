@@ -26,10 +26,12 @@
 		<div style="height: 4%">
 			<span style="font-size: 20px">You joined the group: </span><span style="font-size:20px;font-weight: bold;color: #b6ff00">{{name}}</span>
 		</div>
-		<div id="chat-message" style="height: 89%; width: 75%; overflow-y: auto;word-wrap: break-word">
+		<div id="chat-message" style="height: 82%; width: 75%; overflow-y: auto;word-wrap: break-word">
 		
 		</div>
-		<div id="ui massive chat-inputcontainer" style="width: 75%;height: 6%">
+		<div id="ui massive chat-inputcontainer" style="width: 75%;position: fixed; bottom: 0">
+			<div class="ui icon button"><input type="file" style="display: none"/><i class="cloud icon"></i></div>
+			
 			<textarea id="chat-input" style="resize: none; height: 100%;width: 100%" rows="3"></textarea>
 		</div>
 			</div>		
@@ -51,7 +53,7 @@
 	socket.on('send message', function (data)
 	{
 		console.log(data);
-		$('#chat-message').append('<div class=\"ui grid\"><div class=\"two wide column\">' + data.sender + ':</div><div class=\"fourteen wide column\">' + data.message.replace('\n', '<br/>') + '</div></div>');
+		$('#chat-message').append('<div class=\"ui grid\"><div class=\"two wide column\" style=\"font-weight:bold\">' + data.sender + ':</div><div class=\"fourteen wide column\">' + data.message.replace('\n', '<br/>') + '</div></div>');
 	});
 	$('#chat-input').keydown(function (e)
 	{
