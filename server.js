@@ -60,6 +60,10 @@ server.start(function ()
 		{
 			io.sockets. in (data.groupId).emit('send message', { 'message': data.message, 'sender': Crypter.decrypt(data.sender) });
 		})
+		socket.on('send image message', function (data)
+		{
+			io.sockets. in (data.groupId).emit('send image message', { 'message': data.message, 'sender': Crypter.decrypt(data.sender) });
+		})
 	});
 
 	console.log('Server started on port: ' + port);
