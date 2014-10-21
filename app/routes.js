@@ -152,6 +152,22 @@ module.exports = function (server)
 	});
 	server.route({
 		method: 'GET',
+		path: '/fonts/icons.woff',
+		handler: function (request, reply)
+		{
+			reply.file('./bower_components/semantic/build/packaged/fonts/icons.woff');
+		}
+	});
+	server.route({
+		method: 'GET',
+		path: '/fonts/icons.ttf',
+		handler: function (request, reply)
+		{
+			reply.file('./bower_components/semantic/build/packaged/fonts/icons.ttf');
+		}
+	});
+	server.route({
+		method: 'GET',
 		path: '/semantic.js',
 		handler: function (request, reply)
 		{
