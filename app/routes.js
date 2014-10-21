@@ -125,6 +125,14 @@ module.exports = function (server)
 			reply.file('./public/scripts/home.js');
 		}
 	});
+	server.route({
+		method: 'GET',
+		path: '/chat.js',
+		handler: function (request, reply)
+		{
+			reply.file('./public/scripts/chat.js');
+		}
+	});
 	//resources
 	server.route({
 		method: 'GET',

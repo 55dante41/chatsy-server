@@ -30,8 +30,7 @@
 		
 		</div>
 		<div id="ui massive chat-inputcontainer" style="width: 75%;position: fixed; bottom: 0">
-			<div class="ui icon button"><input type="file" style="display: none"/><i class="cloud icon"></i></div>
-			
+			<div class="ui icon button"><input type="file" id="chat-image"/><i class="cloud icon"></i></div>
 			<textarea id="chat-input" style="resize: none; height: 100%;width: 100%" rows="3"></textarea>
 		</div>
 			</div>		
@@ -40,42 +39,4 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/jquery.min.js" type="text/javascript"></script>
 <script src="/semantic.min.js" type="text/javascript"></script>
-
-<script>
-	var socket = io();
-	var cookies = str_obj(document.cookie);
-	var url = document.URL.split('/');
-	var groupId = url[url.length - 1];
-	socket.on('connect', function ()
-	{
-		socket.emit('join', groupId);
-	});
-	socket.on('send message', function (data)
-	{
-		console.log(data);
-		$('#chat-message').append('<div class=\"ui grid\"><div class=\"two wide column\" style=\"font-weight:bold\">' + data.sender + ':</div><div class=\"fourteen wide column\">' + data.message.replace('\n', '<br/>') + '</div></div>');
-	});
-	$('#chat-input').keydown(function (e)
-	{
-		if (e.keyCode == 13 && !e.shiftKey)
-		{
-			e.preventDefault();
-			if ($('#chat-input').val() != '')
-			{
-				socket.emit('send message', { 'message': $('#chat-input').val(), 'groupId': groupId, 'sender': cookies['alias'] });
-				$('#chat-input').val('');
-			}
-		}
-	});
-	function str_obj(str)
-	{
-		str = str.split(', ');
-		var result = {};
-		for (var i = 0; i < str.length; i++)
-		{
-			var cur = str[i].split('=');
-			result[cur[0]] = cur[1];
-		}
-		return result;
-	}
-</script>
+<script src="/chat.js" type="text/javascript"></script>
