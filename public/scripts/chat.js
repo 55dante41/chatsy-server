@@ -12,7 +12,7 @@ socket.on('send message', function (data)
 });
 socket.on('send image message', function (data)
 {
-	$('#chat-message').append('<div class=\"ui grid\"><div class=\"two wide column\" style=\"font-weight:bold\">' + data.sender + ':</div><div class=\"fourteen wide column\"><img src=\"' + data.message + '\"/></div></div>');
+	$('#chat-message').append('<div class=\"ui grid\"><div class=\"two wide column\" style=\"font-weight:bold\">' + data.sender + ':</div><div class=\"fourteen wide column\"><img style=\"max-width: 25%\" src=\"' + data.message + '\"/></div></div>');
 });
 $('#chat-input').keydown(function (e)
 {
