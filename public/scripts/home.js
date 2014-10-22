@@ -10,10 +10,12 @@ $('document').ready(function ()
 	{
 		$(this).click(function ()
 		{
+			var groupId = $(this).attr('id').split('-')[1];
 			if ($('#joingroup-' + $(this).attr('id').split('-')[1] + '-passkey-input').length == 0)
 			{
 				window.location.href = "/groups/" + $(this).attr('id').split('-')[1];
 			}
+			else
 			{
 				$.ajax(
 				{
@@ -25,7 +27,12 @@ $('document').ready(function ()
 					},
 					success: function (data, status, jqXHR)
 					{
-						//window.location.href = "/joinauth";
+						console.log(data);
+						console.log(status);
+						if (data == "Success")
+						{
+							window.location.href = "/groups/" + groupId;
+						}
 					}
 				});
 			}

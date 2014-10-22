@@ -112,7 +112,21 @@ module.exports = function (server)
 			{
 				Groups.find({ _id: request.params.id }, function (err, result)
 				{
-					reply.view('chat', { name: result[0].name, groupId: result[0]._id });
+					console.log(result[0]);
+					if (result[0].isPrivate)
+					{
+						var cookieB = JSON.parse(Crypter.decrypt(request.state['_b']));
+						if (cookieB[result[0]._id])
+						{
+							reply.view('chat', { name: result[0].name, groupId: result[0]._id });
+						} else
+						{
+							reply.redirect('/home');
+						}
+					} else
+					{
+						reply.view('chat', { name: result[0].name, groupId: result[0]._id });
+					}
 				});
 			}
 		}
@@ -304,14 +318,20 @@ module.exports = function (server)
 				{
 					if (err)
 					{
-						return;
+						console.log(err);
+						reply("Error");
 					}
 					if (result[0].validateKey(request.payload.passkey))
 					{
-						reply.redirect('chat', { name: result[0].name, groupId: result[0]._id });
+						var cookieB = {};
+						cookieB[result[0]._id] = true;
+						console.log(cookieB);
+						console.log(Crypter.encrypt(JSON.stringify(cookieB)));
+						reply("Success").state('_b', Crypter.encrypt(JSON.stringify(cookieB)));
 					} else
 					{
-						reply.redirect('/home');
+						console.log("Validation Failed");
+						reply("Failure");
 					}
 				});
 			}
