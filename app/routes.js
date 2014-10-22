@@ -18,16 +18,7 @@ module.exports = function (server)
 			} else
 			{
 				//User logged in
-				var groups = {};
-				Groups.find({ 'isVisible': true }, function (err, groups)
-				{
-					if (err)
-					{
-						reply("Server Error");
-						return;
-					}
-					reply.view('home', groups);
-				});
+				reply.redirect('/home');
 			}
 		}
 	});
@@ -259,13 +250,11 @@ module.exports = function (server)
 								reply("Failed - Server error");
 							} else
 							{
-
 								reply("Success").state('alias', Crypter.encrypt(request.payload.alias));
 							}
 						});
 					}
 				});
-
 			} else
 			{
 				reply("Error");
