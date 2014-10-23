@@ -1,6 +1,7 @@
 var Groups = require('../app/models/Groups'),
 	Crypter = require('../app/utils/crypting'),
-	Users = require('../app/models/Users');
+	Users = require('../app/models/Users'),
+	Chatlog = require('../app/models/Chatlog');
 
 module.exports = function (server)
 {
@@ -14,7 +15,7 @@ module.exports = function (server)
 			if (request.state['alias'] == undefined)
 			{
 				//User not logged in
-				reply.file('./views/index.html');
+				reply.view('index', {});
 			} else
 			{
 				//User logged in
@@ -30,7 +31,7 @@ module.exports = function (server)
 			if (request.state['alias'] == undefined)
 			{
 				//User not logged in
-				reply.file('./views/index.html');
+				reply.redirect('/');
 			} else
 			{
 				//User logged in
@@ -55,7 +56,7 @@ module.exports = function (server)
 			if (request.state['alias'] == undefined)
 			{
 				//User not logged in
-				reply.file('./views/index.html');
+				reply.redirect('/');
 			} else
 			{
 				//User logged in
@@ -97,7 +98,7 @@ module.exports = function (server)
 			if (request.state['alias'] == undefined)
 			{
 				//User not logged in
-				reply.file('./views/index.html');
+				reply.redirect('/');
 			} else
 			{
 				Groups.find({ _id: request.params.id }, function (err, result)
@@ -107,14 +108,37 @@ module.exports = function (server)
 						var cookieB = JSON.parse(Crypter.decrypt(request.state['_b']));
 						if (cookieB[result[0]._id])
 						{
-							reply.view('chat', { name: result[0].name, groupId: result[0]._id });
+							Chatlog.find({ groupId: request.params.id }).sort({ postedOn: -1 }).limit(20).exec(
+								function (err, resultLogs)
+								{
+									if (err)
+									{
+										console.log(err);
+										reply.view('chat', { name: result[0].name, groupId: result[0]._id });
+										return;
+									}
+									reply.view('chat', { name: result[0].name, groupId: result[0]._id, chatHistory: resultLogs });
+								}
+							);
+
 						} else
 						{
 							reply.redirect('/home');
 						}
 					} else
 					{
-						reply.view('chat', { name: result[0].name, groupId: result[0]._id });
+						Chatlog.find({ groupId: request.params.id }).sort({ postedOn: -1 }).limit(20).exec(
+								function (err, resultLogs)
+								{
+									if (err)
+									{
+										console.log(err);
+										reply.view('chat', { name: result[0].name, groupId: result[0]._id });
+										return;
+									}
+									reply.view('chat', { name: result[0].name, groupId: result[0]._id, chatHistory: resultLogs });
+								}
+							);
 					}
 				});
 			}

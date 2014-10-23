@@ -56,7 +56,10 @@ server.start(function ()
 					{
 						groups[data.groupId] = [];
 					}
-					groups[data.groupId].push(Crypter.decrypt(data.alias));
+					if (groups[data.groupId].indexOf(Crypter.decrypt(data.alias)) == -1)
+					{
+						groups[data.groupId].push(Crypter.decrypt(data.alias));
+					}
 					io.sockets. in (data.groupId).emit('users update', { 'groups': groups });
 				}
 			});

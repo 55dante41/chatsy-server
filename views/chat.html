@@ -28,7 +28,11 @@
 		</div>
 			<div class="ui grid" style="height: 82%">
 				<div class="fourteen wide column" id="chat-message" style="height: 100%; overflow-y: auto;word-wrap: break-word">
-		
+		{{#each chatHistory}}
+					<div>
+					 {{this.postedBy}} : {{this.chatMessage}}
+					</div>
+					{{/each}}
 		</div>
 			<div class="two wide column" id="chat-people" style="height: 100%; overflow-y: auto">
 				
