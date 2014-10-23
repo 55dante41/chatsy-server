@@ -11,6 +11,7 @@ socket.on('connect', function ()
 	};
 	socket.emit('join group', joinData);
 });
+
 socket.on('send message', function (data)
 {
 	$('#chat-message').append('<div class=\"ui grid\"><div class=\"two wide column\" style=\"font-weight:bold\">' + data.sender + ':</div><div class=\"fourteen wide column\">' + data.message.replace('\n', '<br/>') + '</div></div>');
@@ -21,7 +22,11 @@ socket.on('send image message', function (data)
 });
 socket.on('users update', function (data)
 {
-	console.log(data);
+	$('#chat-people').empty();
+	for (var i = 0; i < data.groups[groupId].length; i++)
+	{
+		$('#chat-people').append('<div>' + data.groups[groupId][i] + '</div>');
+	}	
 });
 $('#chat-input').keydown(function (e)
 {
@@ -46,6 +51,11 @@ $('#chat-image').on('change', function (e)
 	}
 	fileReader.readAsDataURL(imageFile);
 });
+
+window.onbeforeunload = function (e)
+{
+	socket.emit('leave group', { 'groupId': groupId, 'alias': cookies['alias'] });
+};
 
 function str_obj(str)
 {

@@ -26,9 +26,15 @@
 		<div style="height: 4%">
 			<span style="font-size: 20px">You joined the group: </span><span style="font-size:20px;font-weight: bold;color: #b6ff00">{{name}}</span>
 		</div>
-		<div id="chat-message" style="height: 82%; width: 75%; overflow-y: auto;word-wrap: break-word">
+			<div class="ui grid" style="height: 82%">
+				<div class="fourteen wide column" id="chat-message" style="height: 100%; overflow-y: auto;word-wrap: break-word">
 		
 		</div>
+			<div class="two wide column" id="chat-people" style="height: 100%; overflow-y: auto">
+				
+			</div>
+			</div>
+		
 		<div id="ui massive chat-inputcontainer" style="width: 75%;position: fixed; bottom: 0">
 			<div class="ui icon button"><input type="file" style="opacity: 0; width: 2px" id="chat-image"/><i class="cloud icon"></i></div>
 			<textarea id="chat-input" style="resize: none; height: 100%;width: 100%" rows="3"></textarea>
