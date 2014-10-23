@@ -6,7 +6,7 @@ $('#creategroup-button').click(function ()
 $('document').ready(function ()
 {
 	//$('#options-sidebar').sidebar({ 'overlay': false }).sidebar('toggle');
-	$("div[id^='joingroup-'][id$='-button'").each(function ()
+	$("div[id^='joingroup-'][id$='-button']").each(function ()
 	{
 		$(this).click(function ()
 		{
