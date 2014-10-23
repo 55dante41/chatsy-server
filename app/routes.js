@@ -75,7 +75,6 @@ module.exports = function (server)
 		{
 			if (request.payload.alias != undefined)
 			{
-				console.log(request.payload);
 				Groups.find({ 'createdBy': Crypter.decrypt(request.payload.alias) }, function (err, result)
 				{
 					if (err)
@@ -103,7 +102,6 @@ module.exports = function (server)
 			{
 				Groups.find({ _id: request.params.id }, function (err, result)
 				{
-					console.log(result[0]);
 					if (result[0].isPrivate)
 					{
 						var cookieB = JSON.parse(Crypter.decrypt(request.state['_b']));
@@ -230,10 +228,8 @@ module.exports = function (server)
 		{
 			if (request.payload.alias != undefined)
 			{
-				console.log(request.payload.alias);
 				Users.find({ alias: request.payload.alias }, function (err, result)
 				{
-					console.log(result.length);
 					if (result.length > 0)
 					{
 						reply("Failed - Alias already exists");
@@ -314,8 +310,6 @@ module.exports = function (server)
 					{
 						var cookieB = {};
 						cookieB[result[0]._id] = true;
-						console.log(cookieB);
-						console.log(Crypter.encrypt(JSON.stringify(cookieB)));
 						reply("Success").state('_b', Crypter.encrypt(JSON.stringify(cookieB)));
 					} else
 					{
