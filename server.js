@@ -46,16 +46,22 @@ server.start(function ()
 	var io = socketio.listen(server.listener);
 	io.on('connection', function (socket)
 	{
-		socket.on('join', function (groupId)
+		socket.on('join group', function (data)
 		{
-			if (groups[groupId] == undefined)
+			socket.join(data.groupId, function ()
 			{
-				groups[groupId] = groupId;
-			}
-			socket.join(groupId, function ()
-			{
-
+				if (data.alias != undefined)
+				{
+					if (groups[data.groupId] == undefined)
+					{
+						groups[data.groupId] = [];
+					}
+					groups[data.groupId].push({ 'alias': Crypter.decrypt(data.alias), 'socket': socket.id });
+					socket.broadcast.emit('users update', { 'groups': groups });
+				}
+				console.log(groups);
 			});
+
 		});
 		socket.on('send message', function (data)
 		{
@@ -69,7 +75,7 @@ server.start(function ()
 				if (err)
 				{
 					console.log(err);
-				} 
+				}
 			});
 		});
 		socket.on('send image message', function (data)
@@ -84,8 +90,24 @@ server.start(function ()
 				if (err)
 				{
 					console.log(err);
-				} 
+				}
 			});
+		});
+		socket.on('disconnect', function ()
+		{
+			var roomsToLeave = socket.rooms;
+			for (var room in roomsToLeave)
+			{
+				for (var user in groups[room])
+				{
+					if (user.socket == socket.id)
+					{
+						groups[room].splice(groups[room].indexOf(user), 1);
+					}
+				}
+			}
+			socket.broadcast.emit('users update', { 'groups': groups });
+			console.log(groups);
 		});
 	});
 

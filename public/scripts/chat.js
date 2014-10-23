@@ -4,7 +4,12 @@ var url = document.URL.split('/');
 var groupId = url[url.length - 1];
 socket.on('connect', function ()
 {
-	socket.emit('join', groupId);
+	var joinData =
+	{
+		'groupId' : groupId,
+		'alias' : cookies['alias']
+	};
+	socket.emit('join group', joinData);
 });
 socket.on('send message', function (data)
 {
@@ -13,6 +18,10 @@ socket.on('send message', function (data)
 socket.on('send image message', function (data)
 {
 	$('#chat-message').append('<div class=\"ui grid\"><div class=\"two wide column\" style=\"font-weight:bold\">' + data.sender + ':</div><div class=\"fourteen wide column\"><img style=\"max-width: 25%\" src=\"' + data.message + '\"/></div></div>');
+});
+socket.on('users update', function (data)
+{
+	console.log(data);
 });
 $('#chat-input').keydown(function (e)
 {
@@ -40,11 +49,11 @@ $('#chat-image').on('change', function (e)
 
 function str_obj(str)
 {
-	str = str.split(', ');
+	var strA = str.split('; ');
 	var result = {};
-	for (var i = 0; i < str.length; i++)
+	for (var i = 0; i < strA.length; i++)
 	{
-		var cur = str[i].split('=');
+		var cur = strA[i].split('=');
 		result[cur[0]] = cur[1];
 	}
 	return result;
