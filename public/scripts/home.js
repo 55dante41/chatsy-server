@@ -133,7 +133,7 @@ $('#browsegroups-button').click(function ()
 
 function str_obj(str)
 {
-	str = str.split(', ');
+	str = str.split('; ');
 	var result = {};
 	for (var i = 0; i < str.length; i++)
 	{
