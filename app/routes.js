@@ -209,6 +209,24 @@ module.exports = function (server)
 			reply.file('./bower_components/semantic/build/packaged/javascript/semantic.min.js');
 		}
 	});
+	server.route(
+	{
+		method: 'GET',
+		path: '/inconsolata-bold.ttf',
+		handler: function (request, reply)
+		{
+			reply.file('./public/fonts/inconsolata-bold.ttf');
+		}
+	});
+	server.route(
+	{
+		method: 'GET',
+		path: '/inconsolata-regular.ttf',
+		handler: function (request, reply)
+		{
+			reply.file('./public/fonts/inconsolata-regular.ttf');
+		}
+	});
 	server.route({
 		method: 'GET',
 		path: '/chatsy.css',
