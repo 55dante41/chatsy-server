@@ -122,10 +122,14 @@ $('#createdgroups-button').click(function ()
 				if (data[i].isPrivate)
 				{
 					$('#createdgroups-list').append('<div class="row"><div class="twelve wide column"><p class="ui header">' + data[i].name + '</p><p>' + data[i].description + '</p></div><div class="four wide column" style="text-align: right"><div class="ui action input"><input type="password" id="joingroup-' + data[0]._id + '-passkey-input" placeholder="Passkey"/><div class="ui button teal" id="joingroup-' + data[0]._id + '-button">Join</div></div></div>');
+					$('#createdgroups-list').append('<div class="row" style="margin:0; padding:0"><div class="sixteen wide column" style="text-align: right"><div class="ui red button" style="margin-left:0.2rem" id="block-'+data[0]._id+'-button">Block</div><div class="ui green button" style="margin-left:0.2rem"  id="invite-' + data[0]._id +'-button">Invite</div><div class="ui button" style="margin-left:0.2rem" id="settings-'+data[0]._id + '-button">Settings</div></div>');
+					$('#createdgroups-list').append('<div class="ui divider"></div>');
 				} else
 				{
 					$('#createdgroups-list').append('<div class="row"><div class="twelve wide column"><p class="ui header">' + data[i].name + '</p><p>' + data[i].description + '</p></div><div class="four wide column" style="text-align: right"><div class="ui button teal" id="joingroup-' + data[0]._id + '-button">Join</div></div>');
-				}				
+					$('#createdgroups-list').append('<div class="row" style="margin:0; padding:0"><div class="sixteen wide column" style="text-align: right"><div class="ui red button" style="margin-left:0.2rem" id="block-'+data[0]._id+'-button">Block</div><div class="ui green button" style="margin-left:0.2rem"  id="invite-' + data[0]._id +'-button">Invite</div><div class="ui button" style="margin-left:0.2rem" id="settings-'+data[0]._id + '-button">Settings</div></div>');
+					$('#createdgroups-list').append('<div class="ui divider"></div>');
+				}
 			}
 		}
 	});
