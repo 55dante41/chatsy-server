@@ -109,8 +109,9 @@ $('#creategroup-modal-submit').click(function ()
 
 $('#createdgroups-button').click(function ()
 {
-	console.log('clicked');
 	var cookies = str_obj(document.cookie);
+	$('#browsegroups-container').hide();
+	$('#createdgroups-container').show();
 	$.ajax(
 	{
 		url: '/groups/created',
@@ -121,7 +122,16 @@ $('#createdgroups-button').click(function ()
 		},
 		success: function (data, status, jqXHR)
 		{
-			console.log(data[0]);
+			for (var i = 0; i < data.length; i++)
+			{
+				if (data[i].isPrivate)
+				{
+					$('#createdgroups-list').append('<div class="row"><div class="twelve wide column"><p class="ui header">' + data[i].name + '</p><p>' + data[i].description + '</p></div><div class="four wide column" style="text-align: right"><div class="ui action input"><input type="password" id="joingroup-'+data[0]._id+'-passkey-input" placeholder="Passkey"/><div class="ui button teal" id="joingroup-'+data[0]._id+'-button">Join</div></div></div>');
+				} else
+				{
+					$('#createdgroups-list').append('<div class="row"><div class="twelve wide column"><p class="ui header">' + data[i].name + '</p><p>' + data[i].description + '</p></div><div class="four wide column" style="text-align: right"><div class="ui button teal" id="joingroup-'+data[0]._id+'-button">Join</div></div>');
+				}
+			}
 		}
 	});
 });
