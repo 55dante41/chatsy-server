@@ -227,6 +227,15 @@ module.exports = function (server)
 			reply.file('./public/fonts/inconsolata-regular.ttf');
 		}
 	});
+	server.route(
+	{
+		method: 'GET',
+		path: '/favicon.ico',
+		handler: function (request, reply)
+		{
+			reply.file('./public/images/favicon.ico');
+		}
+	});
 	server.route({
 		method: 'GET',
 		path: '/chatsy.css',
