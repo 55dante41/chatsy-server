@@ -3,13 +3,9 @@ $('#creategroup-button').click(function ()
 {
 	$('#creategroup-modal').modal('show');
 });
-$('document').ready(function ()
-{
-	//$('#options-sidebar').sidebar({ 'overlay': false }).sidebar('toggle');
-	$("div[id^='joingroup-'][id$='-button']").each(function ()
+
+	$(document).on('click',"div[id^='joingroup-'][id$='-button']",function ()
 	{
-		$(this).click(function ()
-		{
 			var groupId = $(this).attr('id').split('-')[1];
 			if ($('#joingroup-' + $(this).attr('id').split('-')[1] + '-passkey-input').length == 0)
 			{
@@ -38,8 +34,7 @@ $('document').ready(function ()
 			}
 
 		});
-	});
-});
+	
 $('#creategroup-modal-submit').click(function ()
 {
 	var cookies = str_obj(document.cookie);
@@ -126,11 +121,11 @@ $('#createdgroups-button').click(function ()
 			{
 				if (data[i].isPrivate)
 				{
-					$('#createdgroups-list').append('<div class="row"><div class="twelve wide column"><p class="ui header">' + data[i].name + '</p><p>' + data[i].description + '</p></div><div class="four wide column" style="text-align: right"><div class="ui action input"><input type="password" id="joingroup-'+data[0]._id+'-passkey-input" placeholder="Passkey"/><div class="ui button teal" id="joingroup-'+data[0]._id+'-button">Join</div></div></div>');
+					$('#createdgroups-list').append('<div class="row"><div class="twelve wide column"><p class="ui header">' + data[i].name + '</p><p>' + data[i].description + '</p></div><div class="four wide column" style="text-align: right"><div class="ui action input"><input type="password" id="joingroup-' + data[0]._id + '-passkey-input" placeholder="Passkey"/><div class="ui button teal" id="joingroup-' + data[0]._id + '-button">Join</div></div></div>');
 				} else
 				{
-					$('#createdgroups-list').append('<div class="row"><div class="twelve wide column"><p class="ui header">' + data[i].name + '</p><p>' + data[i].description + '</p></div><div class="four wide column" style="text-align: right"><div class="ui button teal" id="joingroup-'+data[0]._id+'-button">Join</div></div>');
-				}
+					$('#createdgroups-list').append('<div class="row"><div class="twelve wide column"><p class="ui header">' + data[i].name + '</p><p>' + data[i].description + '</p></div><div class="four wide column" style="text-align: right"><div class="ui button teal" id="joingroup-' + data[0]._id + '-button">Join</div></div>');
+				}				
 			}
 		}
 	});
