@@ -3,7 +3,9 @@ var mongoose = require('mongoose'),
 	
 var chatlogsSchema = new schema({
 	groupId : {type: String, required: true},
-	chatMessage:{type: String}, 
+	chatMessage:{type: String},
+	textMessage: {type: Boolean},
+	imageMessage: {type: Boolean}, 
 	postedBy: {type: String}, 
 	postedOn: {type: Date, default: Date.now}
 });

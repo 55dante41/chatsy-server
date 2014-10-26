@@ -76,6 +76,8 @@ server.start(function ()
 			var newChatlog = new Chatlog();
 			newChatlog.groupId = data.groupId;
 			newChatlog.chatMessage = data.message;
+			newChatlog.imageMessage = false;
+			newChatlog.textMessage = true;
 			newChatlog.postedBy = Crypter.decrypt(data.sender);
 			newChatlog.save(function (err)
 			{
@@ -92,6 +94,8 @@ server.start(function ()
 			var newChatlog = new Chatlog();
 			newChatlog.groupId = data.groupId;
 			newChatlog.chatMessage = data.message;
+			newChatlog.imageMessage = true;
+			newChatlog.textMessage = false;
 			newChatlog.postedBy = Crypter.decrypt(data.sender);
 			newChatlog.save(function (err)
 			{
