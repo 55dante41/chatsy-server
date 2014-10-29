@@ -7,6 +7,7 @@ var groupsSchema = new schema({
 	description : {type: String, required: false},
 	passkey : {type: String},
 	createdBy : {type: String, required: false},
+	admins : [{type: String}],
 	isPrivate : {type: Boolean},
 	isVisible : {type: Boolean}
 });
