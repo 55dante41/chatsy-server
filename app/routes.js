@@ -108,7 +108,7 @@ module.exports = function (server)
 						var cookieB = JSON.parse(Crypter.decrypt(request.state['_b']));
 						if (cookieB[result[0]._id])
 						{
-							Chatlog.find({ groupId: request.params.id }).sort({ postedOn: -1 }).limit(20).exec(
+							Chatlog.find({ groupId: request.params.id }).sort({ postedOn: 1 }).limit(100).exec(
 								function (err, resultLogs)
 								{
 									if (err)
@@ -127,7 +127,7 @@ module.exports = function (server)
 						}
 					} else
 					{
-						Chatlog.find({ groupId: request.params.id }).sort({ postedOn: -1 }).limit(20).exec(
+						Chatlog.find({ groupId: request.params.id }).sort({ postedOn: 1 }).limit(100).exec(
 								function (err, resultLogs)
 								{
 									if (err)
