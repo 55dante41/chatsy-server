@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8" />
         <title>chatsy</title>
-		<link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
 		<link href="/semantic.min.css" rel="stylesheet" type="text/css"/>
 		<style>
 			.ui.grid {
@@ -38,7 +38,7 @@
 					{{#if this.imageMessage}}
 					<div style="margin-top: 5px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray;padding: 10px">
 						<div style="font-weight:bold; display: inline-block">{{this.postedBy}} :</div>
-						<div style="display: inline-block; word-break:  break-all"><img alt="image" src="{{this.chatMessage}}"/></div>
+						<div style="display: inline-block; word-break:  break-all"><img alt="image" style="max-width: 100%" src="{{this.chatMessage}}"/></div>
 					</div>
 					{{/if}}
 					{{/each}}
