@@ -27,23 +27,25 @@
 			<span style="font-size: 20px">You joined the group: </span><span style="font-size:20px;font-weight: bold;color: #b6ff00">{{name}}</span>
 		</div>
 			<div class="ui grid" style="height: 82%">
-				<div class="fourteen wide column" id="chat-message" style="height: 100%; overflow-y: auto;word-wrap: break-word">
+				<div class="fourteen wide column" id="chat-message" style="height: 100%; overflow-y: auto;word-wrap: break-word; background-color: darkgray; padding-bottom:  10px">
 		{{#each chatHistory}}
 					{{#if this.textMessage}}
-					<div>
-					 {{this.postedBy}} : {{this.chatMessage}}
-					</div>
+					<div style="margin-top: 5px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray;padding: 10px">
+						 <div style="font-weight:bold; display: inline-block">{{this.postedBy}} :</div>
+						 <div style="display: inline-block; word-break: break-all">{{this.chatMessage}}</div>
+					</div>							 					
 					{{/if}}
 					{{#if this.imageMessage}}
-					<div>
-					{{this.postedBy}} : <img alt="image" src="{{this.chatMessage}}" style="max-width: 25%"/>
+					<div style="margin-top: 5px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray;padding: 10px">
+						<div style="font-weight:bold; display: inline-block">{{this.postedBy}} :</div>
+						<div style="display: inline-block; word-break:  break-all"><img alt="image" src="{{this.chatMessage}}"/></div>
 					</div>
 					{{/if}}
 					{{/each}}
-		</div>
-			<div class="two wide column" id="chat-people-container" style="height: 100%;background-color: #000; color: #ffd800">
+				</div>
+			<div class="two wide column" id="chat-people-container" style="height: 100%;background-color: darkgray">
 				<div>Users Online</div>
-				<div id="chat-people" style="height: 90%; overflow-y: auto; background-color: #000; color: #b6ff00">
+				<div id="chat-people" style="height: 90%; overflow-y: auto; background-color:darkgray">
 				</div>
 			</div>
 			</div>
