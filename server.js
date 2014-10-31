@@ -72,7 +72,7 @@ server.start(function ()
 		});
 		socket.on('send message', function (data)
 		{
-			io.sockets. in (data.groupId).emit('send message', { 'message': data.message, 'sender': Crypter.decrypt(data.sender) });
+			io.sockets. in (data.groupId).emit('send message', { 'message': data.message, 'sender': Crypter.decrypt(data.sender), 'sentOn': Date.Now });
 			var newChatlog = new Chatlog();
 			newChatlog.groupId = data.groupId;
 			newChatlog.chatMessage = data.message;
@@ -90,7 +90,7 @@ server.start(function ()
 		});
 		socket.on('send image message', function (data)
 		{
-			io.sockets. in (data.groupId).emit('send image message', { 'message': data.message, 'sender': Crypter.decrypt(data.sender) });
+			io.sockets. in (data.groupId).emit('send image message', { 'message': data.message, 'sender': Crypter.decrypt(data.sender) ,'sentOn': Date.Now });
 			var newChatlog = new Chatlog();
 			newChatlog.groupId = data.groupId;
 			newChatlog.chatMessage = data.message;
