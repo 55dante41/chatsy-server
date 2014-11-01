@@ -4,16 +4,18 @@ $('#creategroup-button').click(function ()
 	$('#creategroup-modal').modal('show');
 });
 
-	$(document).on('click',"div[id^='joingroup-'][id$='-button']",function ()
+$(document).on('click', "div[id^='joingroup-'][id$='-button']", function ()
+{
+	console.log('clicked');
+	var groupId = $(this).attr('id').split('-')[1];
+	if ($('#joingroup-' + $(this).attr('id').split('-')[1] + '-passkey-input').length == 0)
 	{
-			var groupId = $(this).attr('id').split('-')[1];
-			if ($('#joingroup-' + $(this).attr('id').split('-')[1] + '-passkey-input').length == 0)
-			{
-				window.location.href = "/groups/" + $(this).attr('id').split('-')[1];
-			}
-			else
-			{
-				$.ajax(
+		console.log('Public group');
+		window.location.href = "/groups/" + $(this).attr('id').split('-')[1];
+	}
+	else
+	{
+		$.ajax(
 				{
 					url: '/joinauth',
 					type: 'POST',
@@ -31,9 +33,9 @@ $('#creategroup-button').click(function ()
 						}
 					}
 				});
-			}
+	}
 
-		});
+});
 	
 $('#creategroup-modal-submit').click(function ()
 {
@@ -121,14 +123,10 @@ $('#createdgroups-button').click(function ()
 			{
 				if (data[i].isPrivate)
 				{
-					$('#createdgroups-list').append('<div class="row"><div class="twelve wide column"><p class="ui header">' + data[i].name + '</p><p>' + data[i].description + '</p></div><div class="four wide column" style="text-align: right"><div class="ui action input"><input type="password" id="joingroup-' + data[0]._id + '-passkey-input" placeholder="Passkey"/><div class="ui button teal" id="joingroup-' + data[0]._id + '-button">Join</div></div></div>');
-					$('#createdgroups-list').append('<div class="row" style="margin:0; padding:0"><div class="sixteen wide column" style="text-align: right"><div class="ui red button" style="margin-left:0.2rem" id="block-'+data[0]._id+'-button">Block</div><div class="ui green button" style="margin-left:0.2rem"  id="invite-' + data[0]._id +'-button">Invite</div><div class="ui button" style="margin-left:0.2rem" id="settings-'+data[0]._id + '-button">Settings</div></div>');
-					$('#createdgroups-list').append('<div class="ui divider"></div>');
+					$('#createdgroups-list').append('<div class="row" style="padding: 10px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray; margin-left: 10px; margin-right: 10px; margin-top: 5px"><div class="twelve wide column"><p class="ui header">' + data[i].name + '</p><p>' + data[i].description + '</p></div><div class="four wide column" style="text-align: right"><div class="ui action input"><input type="password" id="joingroup-' + data[i]._id + '-passkey-input" placeholder="Passkey"/><div class="ui button teal" id="joingroup-' + data[i]._id + '-button">Join</div></div></div><div class="sixteen wide column" style="text-align: right"><div class="ui red button" style="margin-left:0.2rem" id="block-'+data[i]._id+'-button">Block</div><div class="ui green button" style="margin-left:0.2rem"  id="invite-' + data[i]._id +'-button">Invite</div><div class="ui button" style="margin-left:0.2rem" id="settings-'+data[i]._id + '-button">Settings</div></div></div></div>');					
 				} else
 				{
-					$('#createdgroups-list').append('<div class="row"><div class="twelve wide column"><p class="ui header">' + data[i].name + '</p><p>' + data[i].description + '</p></div><div class="four wide column" style="text-align: right"><div class="ui button teal" id="joingroup-' + data[0]._id + '-button">Join</div></div>');
-					$('#createdgroups-list').append('<div class="row" style="margin:0; padding:0"><div class="sixteen wide column" style="text-align: right"><div class="ui red button" style="margin-left:0.2rem" id="block-'+data[0]._id+'-button">Block</div><div class="ui green button" style="margin-left:0.2rem"  id="invite-' + data[0]._id +'-button">Invite</div><div class="ui button" style="margin-left:0.2rem" id="settings-'+data[0]._id + '-button">Settings</div></div>');
-					$('#createdgroups-list').append('<div class="ui divider"></div>');
+					$('#createdgroups-list').append('<div class="row" style="padding: 10px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray; margin-left:  10px; margin-right:  10px; margin-top: 5px"><div class="twelve wide column"><p class="ui header">' + data[i].name + '</p><p>' + data[i].description + '</p></div><div class="four wide column" style="text-align: right"><div class="ui button teal" id="joingroup-' + data[i]._id + '-button">Join</div></div><div class="sixteen wide column" style="text-align: right"><div class="ui red button" style="margin-left:0.2rem" id="block-'+data[i]._id+'-button">Block</div><div class="ui green button" style="margin-left:0.2rem"  id="invite-' + data[i]._id +'-button">Invite</div><div class="ui button" style="margin-left:0.2rem" id="settings-'+data[i]._id + '-button">Settings</div></div></div></div>');					
 				}
 			}
 		}
