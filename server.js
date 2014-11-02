@@ -72,7 +72,7 @@ server.start(function ()
 		});
 		socket.on('send message', function (data)
 		{
-			io.sockets. in (data.groupId).emit('send message', { 'message': data.message, 'sender': Crypter.decrypt(data.sender), 'sentOn': Date.Now });
+			io.sockets. in (data.groupId).emit('send message', { 'message': data.message, 'sender': Crypter.decrypt(data.sender), 'sentOn': Date() });
 			var newChatlog = new Chatlog();
 			newChatlog.groupId = data.groupId;
 			newChatlog.chatMessage = data.message;

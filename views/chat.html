@@ -26,8 +26,8 @@
 		<div style="height: 4%">
 			<span style="font-size: 20px">You joined the group: </span><span style="font-size:20px;font-weight: bold;color: #b6ff00">{{name}}</span>
 		</div>
-			<div class="ui grid" style="height: 82%">
-				<div class="fourteen wide column" id="chat-message" style="height: 100%; overflow-y: auto;word-wrap: break-word; background-color: darkgray; padding-bottom:  10px">
+			<div class="ui grid" style="height: 97.3%">
+				<div class="fourteen wide column" id="chat-message" style="height: 92%; overflow-y: auto;word-wrap: break-word; background-color: darkgray; padding-bottom:  10px">
 		{{#each chatHistory}}
 					{{#if this.textMessage}}
 					<div style="margin-top: 5px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray;padding: 10px">
@@ -53,9 +53,9 @@
 			</div>
 		
 		<div style="position: absolute;bottom: 0;width: 87.5%;">
-  <textarea rows="2" style="width: 93%;height: 34px;"></textarea>
+  <textarea id="chat-input" rows="2" style="width: 93%;height: 34px;"></textarea>
   <button style="position: absolute; left: 93.5%; width: 40px; height: 40px;"><i class="camera icon"></i></button>
-  <input type="file" style="position: absolute;left: 93.5%;width: 40px;height: 40px;opacity: 0;">
+  <input id="chat-image" type="file" style="position: absolute;left: 93.5%;width: 40px;height: 40px;opacity: 0;">
 </div>
 			</div>		
     </body>
