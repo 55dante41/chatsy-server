@@ -43,7 +43,16 @@ module.exports = function (server)
 						reply("Server Error");
 						return;
 					}
-					reply.view('home', { 'groups': groups });
+					Users.find({ 'alias': Crypter.decrypt(request.state['alias']) }, function (err, result)
+					{
+						if (err)
+						{
+							reply.view('home', { 'groups': groups, 'alias': 'Error', 'isPersistent': false });
+							return;
+						}
+						reply.view('home', { 'groups': groups, 'alias': result[0].alias, 'isPersistent': result[0].isPersistent });
+					});
+
 				});
 			}
 		}

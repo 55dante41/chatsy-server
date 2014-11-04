@@ -79,6 +79,24 @@
 			<div class="thirteen wide column" style="padding: 20px; height: 100%;overflow: auto; display: none" id="starredgroups-list">
 			</div>
 			<div class="thirteen wide column" style="padding: 20px; height: 100%;overflow: auto; display: none" id="account-settings">
+				<div id="account-alias">
+					<div id="account-alias-label" style="display:  inline-block">alias :</div>
+					<div id="account-alias-value" style="display:  inline-block">{{alias}}</div>
+				</div>
+				<div id="account-type">
+					<div id="account-type-label" style="display:  inline-block">type :</div>
+					{{#if isPersistent}}
+					<div id="account-type-value" style="display:  inline-block">PERSISTENT</div>
+					{{else}}
+					<div id="account-type-value" style="display:  inline-block">NOT PERSISTENT</div>
+					<div id="account-type-error" style="background-color: #c0392b; color:white; padding: 10px">
+						Being NOT PERSISTENT causes you to lose your alias after 1 day of non-usage.
+						The alias then becomes available for others to use.
+						To become PERSISTENT click <a href="/home">here</a>.
+						After becoming PERSISTENT you can still be anonymous, but will need your passkey to access your account.
+					</div>
+					{{/if}}
+				</div>
 			</div>
 		</div>
 	</div>
