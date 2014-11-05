@@ -245,6 +245,33 @@ module.exports = function (server)
 			reply.file('./public/images/favicon.ico');
 		}
 	});
+		server.route(
+	{
+		method: 'GET',
+		path: '/jQuery.mCustomScrollbar.css',
+		handler: function (request, reply)
+		{
+			reply.file('./public/packages/malihu-scrollbar/jQuery.mCustomScrollbar.css');
+		}
+	});
+	server.route(
+	{
+		method: 'GET',
+		path: '/jQuery.mCustomScrollbar.concat.min.js',
+		handler: function (request, reply)
+		{
+			reply.file('./public/packages/malihu-scrollbar/jQuery.mCustomScrollbar.concat.min.js');
+		}
+	});
+	server.route(
+	{
+		method: 'GET',
+		path: '/mCSB_buttons.png',
+		handler: function (request, reply)
+		{
+			reply.file('./public/packages/malihu-scrollbar/mCSB_buttons.png');
+		}
+	});
 	server.route({
 		method: 'GET',
 		path: '/chatsy.css',
