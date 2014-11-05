@@ -251,7 +251,7 @@ module.exports = function (server)
 		path: '/jQuery.mCustomScrollbar.css',
 		handler: function (request, reply)
 		{
-			reply.file('./public/packages/malihu-scrollbar/jQuery.mCustomScrollbar.css');
+			reply.file('./public/packages/malihuScrollbar/jQuery.mCustomScrollbar.css');
 		}
 	});
 	server.route(
@@ -260,7 +260,7 @@ module.exports = function (server)
 		path: '/jQuery.mCustomScrollbar.concat.min.js',
 		handler: function (request, reply)
 		{
-			reply.file('./public/packages/malihu-scrollbar/jQuery.mCustomScrollbar.concat.min.js');
+			reply.file('./public/packages/malihuScrollbar/jQuery.mCustomScrollbar.concat.min.js');
 		}
 	});
 	server.route(
@@ -269,7 +269,7 @@ module.exports = function (server)
 		path: '/mCSB_buttons.png',
 		handler: function (request, reply)
 		{
-			reply.file('./public/packages/malihu-scrollbar/mCSB_buttons.png');
+			reply.file('./public/packages/malihuScrollbar/mCSB_buttons.png');
 		}
 	});
 	server.route({
