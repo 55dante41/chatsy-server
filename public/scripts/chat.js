@@ -15,7 +15,7 @@ socket.on('connect', function ()
 socket.on('send message', function (data)
 {
 	var messageContainer = $('#chat-message');
-	messageContainer.append('<div style="margin-top: 5px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray;padding: 10px"><div style="font-weight:bold; display: inline-block">' + data.sender + ':</div><div style="display: inline-block; word-break: break-all">' + data.message.replace('\n', '<br/>') + '</div><div style="color: gray; margin-top: 5px; text-align: right">' + data.sentOn + '</div></div>');
+	messageContainer.append('<div style="margin-top: 5px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray;padding: 10px"><div style="font-weight:bold; display: inline-block">' + data.sender + ':</div><div style="display: inline-block; word-break: break-all">' + data.message.split('\n').join('<br/>') + '</div><div style="color: gray; margin-top: 5px; text-align: right">' + data.sentOn + '</div></div>');
 	messageContainer.scrollTop(messageContainer.prop("scrollHeight"));
 });
 socket.on('send image message', function (data)
