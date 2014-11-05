@@ -79,13 +79,13 @@ module.exports = function (server)
 	});
 	server.route(
 	{
-		method: 'POST',
+		method: 'GET',
 		path: '/groups/created',
 		handler: function (request, reply)
 		{
-			if (request.payload.alias != undefined)
+			if (request.state['alias'] != undefined)
 			{
-				Groups.find({ 'createdBy': Crypter.decrypt(request.payload.alias) }, function (err, result)
+				Groups.find({ 'createdBy': Crypter.decrypt(request.state['alias']) }, function (err, result)
 				{
 					if (err)
 					{
@@ -380,6 +380,49 @@ module.exports = function (server)
 				});
 			}
 		}
-	})
-
+	});
+	server.route(
+	{
+		method: 'POST',
+		path: '/user/account-type',
+		handler: function (request, reply)
+		{
+			if (request.state['alias'] != undefined)
+			{
+				if (request.payload.passkey == request.payload.confirmPasskey)
+				{
+					Users.findOne({ alias: Crypter.decrypt(request.state['alias']) }, function (err, doc)
+					{
+						if (err)
+						{
+							reply('Error - Query failed');
+							return;
+						}
+						doc.isPersistent = true;
+						doc.passkey = doc.generateHash(request.payload.passkey);
+						//doc.lastInteractedOn = Date();
+						doc.save(function (err)
+						{
+							if (err)
+							{
+								reply('Error - Update failed');
+								return;
+							} else
+							{
+								reply('Success');
+							}
+						});
+					});
+				} else
+				{
+					reply('Failed - Invalid Passkey');
+					return;
+				}
+			} else
+			{
+				reply('Failed - Invalid Request');
+				return;
+			}
+		}
+	});
 };

@@ -113,11 +113,7 @@ $('#createdgroups-button').click(function ()
 	$.ajax(
 	{
 		url: '/groups/created',
-		type: 'POST',
-		data:
-		{
-			'alias': cookies['alias']
-		},
+		type: 'GET',
 		success: function (data, status, jqXHR)
 		{
 			for (var i = 0; i < data.length; i++)
@@ -144,6 +140,41 @@ $('#account-button').click(function ()
 	$('#browsegroups-container').hide();
 	$('#account-settings').show();
 	$('#createdgroups-container').hide();
+});
+
+$('#action-persistent-button').click(function ()
+{
+	$('#account-type-actioncontainer').show();
+});
+
+$('#account-type-action').click(function ()
+{
+	if ($('#action-type-passkey').val() == $('#action-type-confirmpasskey').val())
+	{
+		$.ajax(
+		{
+			type: 'POST',
+			url: '/user/account-type',
+			data:
+			{
+				'passkey': $('#action-type-passkey').val(),
+				'confirmPasskey': $('#action-type-confirmpasskey').val()
+			},
+			success: function (data, status, jqXHR)
+			{
+				if (data == 'Success')
+				{
+					window.location.href = '/home';
+				} else
+				{
+					//Error cases handled in here
+				}
+			}
+		});
+	} else
+	{
+
+	}
 });
 
 function str_obj(str)

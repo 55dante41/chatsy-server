@@ -92,8 +92,21 @@
 					<div id="account-type-error" style="background-color: #c0392b; color:white; padding: 10px">
 						Being NOT PERSISTENT causes you to lose your alias after 1 day of non-usage.
 						The alias then becomes available for others to use.
-						To become PERSISTENT click <a href="/home">here</a>.
+						To become PERSISTENT click <button style="display: inline-block" id="action-persistent-button">here</button>.
 						After becoming PERSISTENT you can still be anonymous, but will need your passkey to access your account.
+					</div>
+					<div id="account-type-actioncontainer" style="display: none">
+						<div>
+							<div style="display: inline-block">Passkey :</div>
+							<div class="ui input" style="display: inline-block"><input id="account-type-passkey" type="password"/></div>
+						</div>
+						<div>
+							<div style="display: inline-block">Confirm Passkey :</div>
+							<div class="ui input" style="display: inline-block"><input id="account-type-confirmpasskey" type="password"/></div>
+						</div>
+						<div id="account-type-action" class="ui button teal">
+							Make me Persistent!
+						</div>
 					</div>
 					{{/if}}
 				</div>
