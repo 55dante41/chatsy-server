@@ -245,7 +245,7 @@ module.exports = function (server)
 			reply.file('./public/images/favicon.ico');
 		}
 	});
-		server.route(
+	server.route(
 	{
 		method: 'GET',
 		path: '/jQuery.mCustomScrollbar.css',
