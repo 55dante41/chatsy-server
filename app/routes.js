@@ -269,7 +269,7 @@ module.exports = function (server)
 		path: '/malihu-scrollbar.css',
 		handler: function (request, reply)
 		{
-			reply.file('./public/stylesheets/jQuery.mCustomScrollbar.css');
+			reply.file('./public/stylesheets/malihu-scrollbar.css');
 		}
 	});
 	server.route(
@@ -278,7 +278,7 @@ module.exports = function (server)
 		path: '/malihu-scrollbar.concat.min.js',
 		handler: function (request, reply)
 		{
-			reply.file('./public/scripts/jQuery.mCustomScrollbar.concat.min.js');
+			reply.file('./public/scripts/malihu-scrollbar.concat.min.js');
 		}
 	});
 	server.route(
