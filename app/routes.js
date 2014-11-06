@@ -221,6 +221,24 @@ module.exports = function (server)
 	server.route(
 	{
 		method: 'GET',
+		path: '/perfect-scrollbar.min.css',
+		handler: function (request, reply)
+		{
+			reply.file('./public/stylesheets/perfect-scrollbar.min.css');
+		}
+	});
+	server.route(
+	{
+		method: 'GET',
+		path: '/perfect-scrollbar.min.js',
+		handler: function (request, reply)
+		{
+			reply.file('./public/scripts/perfect-scrollbar.min.js');
+		}
+	});
+	server.route(
+	{
+		method: 'GET',
 		path: '/inconsolata-bold.ttf',
 		handler: function (request, reply)
 		{
