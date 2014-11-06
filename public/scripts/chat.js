@@ -17,12 +17,14 @@ socket.on('send message', function (data)
 	var messageContainer = $('#chat-message');
 	messageContainer.append('<div style="margin-top: 5px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray;padding: 10px"><div style="font-weight:bold; display: inline-block">' + data.sender + ':</div><div style="display: inline-block; word-break: break-all">' + data.message.split('\n').join('<br/>') + '</div><div style="color: gray; margin-top: 5px; text-align: right">' + data.sentOn + '</div></div>');
 	messageContainer.scrollTop(messageContainer.prop("scrollHeight"));
+	messageContainer.perfectScrollbar('update');	
 });
 socket.on('send image message', function (data)
 {
 	var messageContainer = $('#chat-message');
 	messageContainer.append('<div style="margin-top: 5px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray;padding: 10px"><div style="font-weight:bold; display: inline-block">' + data.sender + ':</div><div style="display: inline-block; word-break: break-all"><img style="max-width: 50%" src=\"' + data.message + '"/></div><div style="color: gray; margin-top: 5px; text-align: right">'+data.sentOn+'</div></div>');
 	messageContainer.scrollTop(messageContainer.prop("scrollHeight"));
+	messageContainer.perfectScrollbar('update');
 });
 socket.on('users update', function (data)
 {
@@ -56,16 +58,15 @@ $('#chat-image').on('change', function (e)
 	fileReader.readAsDataURL(imageFile);
 });
 
+$(document).ready(function ()
+{
+	$('#chat-message').scrollTop($('#chat-message').prop("scrollHeight"));
+});
+
 window.onbeforeunload = function (e)
 {
 	socket.emit('leave group', { 'groupId': groupId, 'alias': cookies['alias'] });
 };
-
-$(document).ready(function(e)
-{
-	var messageContainer = $('#chat-message');
-	messageContainer.scrollTop(messageContainer.prop("scrollHeight"));
-});
 
 function str_obj(str)
 {
