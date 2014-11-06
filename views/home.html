@@ -7,10 +7,12 @@
 	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
 	<link href="/semantic.min.css" rel="stylesheet" type="text/css"/>
 	<link href="/chatsy.css" rel="stylesheet" type="text/css"/>	
+	<link href="/perfect-scrollbar.min.css" rel="stylesheet"  type="text/css"/>
 	<style>
 	 .ui.grid>.row {
 		 width:	initial!important;
  	}
+	 
 	</style>
 </head>
 <body class="fonts-default" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: 0">
@@ -39,7 +41,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="thirteen wide column" style="padding: 20px; height: 100%;overflow: auto; background-color: darkgray; padding-top:  5px" id="browsegroups-container">
+			<div class="thirteen wide column" style="padding: 20px; height: 100%;overflow: hidden; background-color: darkgray; padding-top:  5px; position: relative" id="browsegroups-container">
 				<div class="ui grid" id="browsegroups-list">
 					{{#each groups}}
 					<div class="row" style="padding: 10px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray; margin-left:  10px; margin-right:  10px; margin-top:  5px">
@@ -148,3 +150,10 @@
 <script src="/jquery.min.js" type="text/javascript"></script>
 <script src="/semantic.min.js" type="text/javascript"></script>
 <script src="/home.js" type="text/javascript"></script>
+<script src="/perfect-scrollbar.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$('#browsegroups-container').perfectScrollbar(
+	{
+		'suppressScrollX':true
+	});
+</script>

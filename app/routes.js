@@ -77,23 +77,26 @@ module.exports = function (server)
 			}
 		}
 	});
+	
 	server.route(
 	{
 		method: 'GET',
 		path: '/groups/created',
 		handler: function (request, reply)
 		{
-			if (request.state['alias'] != undefined)
+			if (request.state['alias'] == undefined)
 			{
-				Groups.find({ 'createdBy': Crypter.decrypt(request.state['alias']) }, function (err, result)
+				reply.redirect('/');
+			} else
+			{
+				Groups.find({ 'createdBy': Crypter.decrypt(request.state['alias']) }, function (err, docs)
 				{
 					if (err)
 					{
 						console.log(err);
-						reply("Query failed");
 						return;
 					}
-					reply(result);
+					reply.view('created', { 'alias':Crypter.decrypt(request.state['alias']),'createdGroups': docs });
 				});
 			}
 		}

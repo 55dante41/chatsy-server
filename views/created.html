@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>{{alias}} - Created Groups | chatsy</title>
+		<link href="/favicon.ico" rel="icon" type="image/x-icon" />
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+	<link href="/semantic.min.css" rel="stylesheet" type="text/css"/>
+	<link href="/chatsy.css" rel="stylesheet" type="text/css"/>	
+	<link href="/perfect-scrollbar.min.css" rel="stylesheet"  type="text/css"/>
+	<style>
+	 .ui.grid>.row {
+		 width:	initial!important;
+ 	}
+	 
+	</style>
+    </head>
+    <body class="fonts-default" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: 0">
+	<div class="ui inverted" id="header" style="width: 100%; height: 50px; background-color: #000; color: #fff">
+		<a href="/home" style="font-size: 40px; text-decoration: none; padding: 2px"><span style="color: #ffd800;font-weight: bolder">chat</span><span style="color: #b6ff00; font-weight: bold">sy</span></a>
+		alpha
+	</div>
+	<div class="ui grid" id="body" style="width:100%; height: 100%; position: absolute; top: 0; padding-top: 50px">
+		<div class="row" style="height: 100%">
+			<div class="three wide column" id="options-sidebar" style="padding: 0; height: 100%">
+				<div class="ui inverted vertical menu" style="border-radius: 0; width: 100%; height: 100%">
+					<a class="item" id="browsegroups-button">
+						Browse groups
+					</a>
+					<a class="item" id="creategroup-button">
+						Create a group
+					</a>
+					<a class="active item" id="createdgroups-button">
+						Created groups
+					</a>
+					<a class="item" id="starred-button">
+						Starred/Bookmarked
+					</a>
+					<a class="item" id="account-button">
+						Account
+					</a>
+				</div>
+			</div>
+			<div class="thirteen wide column" style="padding: 20px; height: 100%;overflow: auto; background-color: DarkGray; padding-top:  5px" id="createdgroups-container">
+				<div class="ui grid" id="createdgroups-list">
+				{{#each createdGroups}}
+					<div class="row" style="padding: 10px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray; margin-left:  10px; margin-right:  10px; margin-top:  5px">
+						<div class="twelve wide column">
+							<p class="ui header">
+							  {{this.name}} 
+							</p>
+							<p>
+							  {{this.description}}
+							</p>
+						</div>
+						<div class="four wide column" style="text-align: right">
+							<div class="ui action input">
+								<input type="password" id="joingroup-{{this._id}}-passkey-input" placeholder="Passkey"/>
+								<div class="ui button teal" id="joingroup-{{this._id}}-button">
+									Join
+								</div>
+							</div>
+						</div>
+						<div class="sixteen wide column" style="text-align: right">
+							<div class="ui red button" style="margin-left:0.2rem" id="block-{{this._id}}-button">
+								Block
+							</div>
+							<div class="ui green button" style="margin-left:0.2rem"  id="invite-{{this._id}}-button">
+								Invite
+							</div>
+							<div class="ui button" style="margin-left:0.2rem" id="settings-{{this._id}}-button">
+								Settings
+							</div>
+						</div>
+						<div id="settings-{{this._id}}-container" class="sixteen wide column" style="text-align: right; display: none">
+							<div id="settings-{{this._id}}-name-container">
+							<div id="settings-{{this._id}}-name-label" style="display: inline-block">
+								Name :
+							</div>
+							<div class="ui input">
+								<input type="text" id="settings-{{this._id}}-name-input" />
+							</div>
+								</div>
+							<div id="settings-{{this._id}}-description-container">
+							<div id="settings-{{this._id}}-description-label" style="display: inline-block">
+								Description :
+							</div>
+							<div class="ui input">
+								<input type="text" id="settings-{{this._id}}-description-input" />
+							</div>
+								</div>
+							<div id="settings-{{this._id}}-currentpasskey-container">
+								<div id="settings-{{this._id}}-currentpasskey-label" style="display: inline-block">
+									Current Passkey :
+								</div>
+								<div class="ui input">
+									<input type="password" id="settings-{{this._id}}-currentpasskey-input" />
+								</div>
+							</div>
+							<div id="settings-{{this._id}}-newpasskey-container">
+								<div id="settings-{{this._id}}-newpasskey-label" style="display: inline-block">
+									Change Passkey :
+								</div>
+								<div class="ui input">
+									<input type="password" id="settings-{{this._id}}-newpasskey-input" />
+								</div>
+							</div>
+							<div id="settings-{{this._id}}-confirmpasskey-container">
+								<div id="settings-{{this._id}}-confirmpasskey-label" style="display: inline-block">
+									Confirm Passkey :
+								</div>
+								<div class="ui input">
+									<input type="password" id="settings-{{this._id}}-confirmpasskey-input" />
+								</div>
+							</div>
+							<div id="settings-{{this._id}}-visibility-container">
+								<div id="settings-{{this._id}}-visibility-label" style="display: inline-block">
+									Visibility :
+								</div>
+								{{#if this.isVisible}}
+									<div style="display:  inline-block">
+										Visible to all
+									</div>									
+								{{else}}
+									<div style="display:  inline-block">
+										Visible to Selected
+									</div>								
+								{{/if}}
+								<button>Change</button>
+							</div>
+							<div id="settings-{{this._id}}-privacy-container">
+								<div id="settings-{{this._id}}-privacy-label" style="display: inline-block">
+									Privacy :
+								</div>
+								{{#if this.isPrivate}}
+									<div style="display:  inline-block">
+										Private
+									</div>									
+								{{else}}
+									<div style="display:  inline-block">
+										Public
+									</div>								
+								{{/if}}
+								<button>Change</button>
+							</div>
+						</div>
+					</div>									
+				{{/each}}
+				</div>
+			</div>			
+			
+		</div>
+	</div>
+
+	<div class="ui modal" id="creategroup-modal">
+		<div class="header">
+			Create a Group
+		</div>
+		<div class="content">
+			<div class="ui fluid input">
+				<input type="text" id="creategroup-name-input" placeholder="Name"/>
+			</div>
+			<div class="ui fluid input top-marginned">
+				<input type="text" id="creategroup-description-input" placeholder="Description" style="resize: none; width: 100%"></textarea>
+			</div>
+			<div class="ui large checkbox top-marginned">
+				<input type="checkbox" id="creategroup-visibility-checkbox">
+				<label for="creategroup-visibility-checkbox">This group is visible to all</label>
+			</div>
+			<div class="ui fluid input top-marginned">
+				<input type="password" id="creategroup-key-input" placeholder="Pass Key"/>
+			</div>
+			<div class="ui red message">
+				Empty Passkey field makes the group public
+			</div>
+		</div>
+		<div class="actions">
+			<div class="ui large teal button" id="creategroup-modal-submit">
+				Create
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/jquery.min.js" type="text/javascript"></script>
+<script src="/semantic.min.js" type="text/javascript"></script>
+<script src="/home.js" type="text/javascript"></script>
+<script src="/perfect-scrollbar.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).on('click', "div[id^='settings-'][id$='-button']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+		$('#settings-' + groupId + '-container').show();
+	});
+
+</script>
