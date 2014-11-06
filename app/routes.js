@@ -266,7 +266,7 @@ module.exports = function (server)
 	server.route(
 	{
 		method: 'GET',
-		path: '/jQuery.mCustomScrollbar.css',
+		path: '/malihu-scrollbar.css',
 		handler: function (request, reply)
 		{
 			reply.file('./public/stylesheets/jQuery.mCustomScrollbar.css');
@@ -275,7 +275,7 @@ module.exports = function (server)
 	server.route(
 	{
 		method: 'GET',
-		path: '/jQuery.mCustomScrollbar.concat.min.js',
+		path: '/malihu-scrollbar.concat.min.js',
 		handler: function (request, reply)
 		{
 			reply.file('./public/scripts/jQuery.mCustomScrollbar.concat.min.js');
