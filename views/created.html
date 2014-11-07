@@ -93,7 +93,8 @@
 								Description :
 							</div>
 							<div class="ui input" style="width: 84%">
-								<input type="text" id="settings-{{this._id}}-description-input" />
+								<textarea id="settings-{{this._id}}-description-input" rows="3" style="width:  100%">									
+								</textarea>
 							</div>
 								</div>
 							<div id="settings-{{this._id}}-currentpasskey-container" style="margin-top: 5px">
@@ -154,7 +155,10 @@
 							</div>
 						</div>
 						<div class="sixteen wide column" id="settings-{{this._id}}-actioncontainer" style="display: none; text-align: right">
-							<div class="ui green button" id="settings={{this._id}}-saveaction">
+							<div class="ui green button" id="settings-{{this._id}}-doneaction">
+								Done
+							</div>
+							<div class="ui button" id="settings={{this._id}}-saveaction">
 								Save
 							</div>
 						</div>
@@ -208,6 +212,19 @@
 		var groupId = $(this).attr('id').split('-')[1];
 		$('#settings-' + groupId + '-container').show();
 		$('#settings-' + groupId + '-actioncontainer').show();
+	});
+
+	$(document).on('click', "div[id^='settings-'][id$='-doneaction']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+		$('#settings-' + groupId + '-container').hide();
+		$('#settings-' + groupId + '-actioncontainer').hide();
+	});
+
+	$(document).on('click', "div[id^='settings-'][id$='-saveaction']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+		
 	});
 
 </script>
