@@ -55,12 +55,18 @@
 							</p>
 						</div>
 						<div class="four wide column" style="text-align: right">
+							{{#if this.isPrivate}}
 							<div class="ui action input">
 								<input type="password" id="joingroup-{{this._id}}-passkey-input" placeholder="Passkey"/>
 								<div class="ui button teal" id="joingroup-{{this._id}}-button">
 									Join
 								</div>
 							</div>
+							{{else}}
+								<div class="ui button teal" id="joingroup-{{this._id}}-button">
+									Join
+								</div>
+							{{/if}}
 						</div>
 						<div class="sixteen wide column" style="text-align: right">
 							<div class="ui red button" style="margin-left:0.2rem" id="block-{{this._id}}-button">
@@ -73,76 +79,83 @@
 								Settings
 							</div>
 						</div>
-						<div id="settings-{{this._id}}-container" class="sixteen wide column" style="text-align: right; display: none">
+						<div id="settings-{{this._id}}-container" class="sixteen wide column" style="margin-top: 10px; display: none">
 							<div id="settings-{{this._id}}-name-container">
-							<div id="settings-{{this._id}}-name-label" style="display: inline-block">
+							<div id="settings-{{this._id}}-name-label" style="width: 15%; display: inline-block">
 								Name :
 							</div>
-							<div class="ui input">
+							<div class="ui input" style="width: 84%">
 								<input type="text" id="settings-{{this._id}}-name-input" />
 							</div>
 								</div>
-							<div id="settings-{{this._id}}-description-container">
-							<div id="settings-{{this._id}}-description-label" style="display: inline-block">
+							<div id="settings-{{this._id}}-description-container" style="margin-top: 5px">
+							<div id="settings-{{this._id}}-description-label" style="width: 15%; display: inline-block">
 								Description :
 							</div>
-							<div class="ui input">
+							<div class="ui input" style="width: 84%">
 								<input type="text" id="settings-{{this._id}}-description-input" />
 							</div>
 								</div>
-							<div id="settings-{{this._id}}-currentpasskey-container">
-								<div id="settings-{{this._id}}-currentpasskey-label" style="display: inline-block">
+							<div id="settings-{{this._id}}-currentpasskey-container" style="margin-top: 5px">
+								<div id="settings-{{this._id}}-currentpasskey-label" style="width: 15%; display: inline-block">
 									Current Passkey :
 								</div>
-								<div class="ui input">
+								<div class="ui input" style="width: 25%">
 									<input type="password" id="settings-{{this._id}}-currentpasskey-input" />
 								</div>
 							</div>
-							<div id="settings-{{this._id}}-newpasskey-container">
-								<div id="settings-{{this._id}}-newpasskey-label" style="display: inline-block">
-									Change Passkey :
+							<div id="settings-{{this._id}}-newpasskey-container" style="margin-top: 5px">
+								<div id="settings-{{this._id}}-newpasskey-label" style="width: 15%; display: inline-block">
+									New Passkey :
 								</div>
-								<div class="ui input">
+								<div class="ui input" style="width: 25%">
 									<input type="password" id="settings-{{this._id}}-newpasskey-input" />
 								</div>
 							</div>
-							<div id="settings-{{this._id}}-confirmpasskey-container">
-								<div id="settings-{{this._id}}-confirmpasskey-label" style="display: inline-block">
+							<div id="settings-{{this._id}}-confirmpasskey-container" style="margin-top: 5px">
+								<div id="settings-{{this._id}}-confirmpasskey-label" style="width: 15%; display: inline-block">
 									Confirm Passkey :
 								</div>
-								<div class="ui input">
+								<div class="ui input" style="width: 25%">
 									<input type="password" id="settings-{{this._id}}-confirmpasskey-input" />
 								</div>
 							</div>
-							<div id="settings-{{this._id}}-visibility-container">
-								<div id="settings-{{this._id}}-visibility-label" style="display: inline-block">
+							<div id="settings-{{this._id}}-visibility-container" style="margin-top: 5px">
+								<div id="settings-{{this._id}}-visibility-label" style="width: 15%; display: inline-block">
 									Visibility :
 								</div>
 								{{#if this.isVisible}}
-									<div style="display:  inline-block">
+									<div style="display:  inline-block; width:  84%">
 										Visible to all
+										<button>Change</button>
 									</div>									
 								{{else}}
-									<div style="display:  inline-block">
+									<div style="display:  inline-block; width:  84%">
 										Visible to Selected
+										<button>Change</button>
 									</div>								
-								{{/if}}
-								<button>Change</button>
+								{{/if}}								
 							</div>
-							<div id="settings-{{this._id}}-privacy-container">
-								<div id="settings-{{this._id}}-privacy-label" style="display: inline-block">
+							<div id="settings-{{this._id}}-privacy-container" style="margin-top: 5px">
+								<div id="settings-{{this._id}}-privacy-label" style="width: 15%; display: inline-block">
 									Privacy :
 								</div>
 								{{#if this.isPrivate}}
-									<div style="display:  inline-block">
+									<div style="display:  inline-block; width:  84%">
 										Private
+										<button>Change</button>
 									</div>									
 								{{else}}
-									<div style="display:  inline-block">
+									<div style="display:  inline-block; width:  84%">
 										Public
+										<button>Change</button>
 									</div>								
-								{{/if}}
-								<button>Change</button>
+								{{/if}}								
+							</div>
+						</div>
+						<div class="sixteen wide column" id="settings-{{this._id}}-actioncontainer" style="display: none; text-align: right">
+							<div class="ui green button" id="settings={{this._id}}-saveaction">
+								Save
 							</div>
 						</div>
 					</div>									
@@ -194,6 +207,7 @@
 	{
 		var groupId = $(this).attr('id').split('-')[1];
 		$('#settings-' + groupId + '-container').show();
+		$('#settings-' + groupId + '-actioncontainer').show();
 	});
 
 </script>
