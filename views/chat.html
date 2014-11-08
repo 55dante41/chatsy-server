@@ -28,8 +28,8 @@
 		<div style="height: 30px; position:  absolute; top:  0; padding-top: 50px; width:  100%; z-index:  45">
 			<span style="font-size: 20px">You joined the group: </span><span style="font-size:20px;font-weight: bold;color: #b6ff00">{{name}}</span>
 		</div>
-			<div class="ui grid" style="margin: 0;height: 100%; width:  100%; position:  absolute; top:  0; padding-top: 80px; z-index:  40">
-				<div class="fourteen wide column" id="chat-message" style="height: 100%; overflow: hidden;position: relative; word-wrap: break-word; background-color: darkgray; padding-bottom:  10px">
+			<div class="ui grid" style="margin: 0;height: 100%; width:  100%; position:  absolute; top:  0; padding-top: 80px; z-index:  40;">
+				<div class="fourteen wide column" id="chat-message" style="min-width:  75%; overflow: hidden;position: absolute; top: 80px; left: 0px;bottom: 50px; word-wrap: break-word; padding-bottom:  10px">
 		{{#each chatHistory}}
 					{{#if this.textMessage}}
 					<div style="margin-top: 5px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray;padding: 10px">
@@ -47,14 +47,14 @@
 					{{/if}}
 					{{/each}}
 				</div>
-			<div class="two wide column" id="chat-people-container" style="height: 100%;background-color: darkgray; padding:  0">
+			<div class="two wide column" id="chat-people-container" style="background-color: darkgray; max-width:  25%; position:  absolute; top: 80px; right: 0px;bottom:  50px;">
 				<div>Users Online</div>
-				<div id="chat-people" style="height: 93%; overflow-y: hidden;position: relative; background-color:darkgray; padding:  10px">
+				<div id="chat-people" style="height: 95%; overflow-y: hidden;position: relative; background-color:darkgray; padding:  10px">
 				</div>
 			</div>
 			</div>
 		
-		<div style="position: absolute;bottom: 0;width: 87.5%; z-index:  50">
+		<div style="position: absolute;bottom: 0;width: 100%; z-index:  50">
   <textarea id="chat-input" rows="2" style="width: 93%;height: 34px;"></textarea>
   <button style="position: absolute; left: 93.5%; width: 40px; height: 40px;"><i class="camera icon"></i></button>
   <input id="chat-image" type="file" style="position: absolute;left: 93.5%;width: 40px;height: 40px;opacity: 0;">
