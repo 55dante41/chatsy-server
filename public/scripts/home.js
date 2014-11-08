@@ -138,9 +138,7 @@ $('#browsegroups-button').click(function ()
 
 $('#account-button').click(function ()
 {
-	$('#browsegroups-container').hide();
-	$('#account-settings').show();
-	$('#createdgroups-container').hide();
+	window.location.href = "/account";
 });
 
 $('#action-persistent-button').click(function ()

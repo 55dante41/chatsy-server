@@ -77,7 +77,7 @@ module.exports = function (server)
 			}
 		}
 	});
-	
+
 	server.route(
 	{
 		method: 'GET',
@@ -96,7 +96,30 @@ module.exports = function (server)
 						console.log(err);
 						return;
 					}
-					reply.view('created', { 'alias':Crypter.decrypt(request.state['alias']),'createdGroups': docs });
+					reply.view('created', { 'alias': Crypter.decrypt(request.state['alias']), 'createdGroups': docs });
+				});
+			}
+		}
+	});
+	server.route(
+	{
+		method: 'GET',
+		path: '/account',
+		handler: function (request, reply)
+		{
+			if (request.state['alias'] == undefined)
+			{
+				reply.redirect('/');
+			} else
+			{
+				Users.find({ 'alias': Crypter.decrypt(request.state['alias']) }, function (err, docs)
+				{
+					if (err)
+					{
+						console.log(err);
+						return;
+					}
+					reply.view('account', { 'user': docs[0], 'alias': Crypter.decrypt(request.state['alias']) });
 				});
 			}
 		}
