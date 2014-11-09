@@ -157,7 +157,27 @@ module.exports = function (server)
 								reply('Error: Database Operation failed');
 								return;
 							}
-							reply({'success': true,'aliasCookie':Crypter.encrypt(doc.alias), 'alias':doc.alias});
+							Groups.find({ 'createdBy': Crypter.decrypt(request.state['alias']) }, function (err, groupDocs)
+							{
+								if (err)
+								{
+									console.log(err);
+									reply('Error: Database Operation failed');
+									return;
+								}
+								for (var groupDoc in groupDocs)
+								{
+									groupDoc.createdBy = doc.alias;
+									groupDoc.save(function (err)
+									{
+										if (err)
+										{
+											console.log(err);
+										}
+									});
+								}
+								reply({ 'success': true, 'aliasCookie': Crypter.encrypt(doc.alias), 'alias': doc.alias });
+							});							
 						});
 					} else
 					{
