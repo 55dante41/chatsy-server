@@ -45,23 +45,17 @@
 				<div id="account-alias">
 					<div id="account-alias-label" style="display:  inline-block; font-size: 1.2em">alias :</div>
 					<div id="account-alias-value" style="display:  inline-block; font-size: 1.5em; font-weight: bold">{{alias}}</div>
-					<a href="#" style="font-size:  1.2em; font-weight:  bold; color:  darkblue">change</a>
+					<a href="#" id="account-alias-actionchange" style="font-size:  1.2em; font-weight:  bold; color:  darkblue">change</a>
 				</div>
 				<div id="account-type">
 					<div id="account-type-label" style="display:  inline-block; font-size:  1.2em">status :</div>
 					{{#if isPersistent}}
 					<div id="account-type-value" style="display:  inline-block; font-size: 1.5em; font-weight: bold">white</div>
-					<a href="#" style="font-size:  1.2em; font-weight:  bold; color:  darkblue">change</a>
+					<a href="#" id="account-type-actionchange" style="font-size:  1.2em; font-weight:  bold; color:  darkblue">change</a>
 					{{else}}
 					<div id="account-type-value" style="display:  inline-block; font-size: 1.5em; font-weight: bold">gray</div>
-					<a href="#" style="font-size:  1.2em; font-weight:  bold; color:  darkblue">change</a>
-					<div id="account-type-error" style="background-color: #c0392b; color:white; padding: 10px">
-						Being NOT PERSISTENT causes you to lose your alias after 1 day of non-usage.
-						The alias then becomes available for others to use.
-						To become PERSISTENT click <button style="display: inline-block" id="action-persistent-button">here</button>.
-						After becoming PERSISTENT you can still be anonymous, but will need your passkey to access your account.
-					</div>
-					<div id="account-type-actioncontainer" style="display: none">
+					<a href="#" id="account-type-actionchange" style="font-size:  1.2em; font-weight:  bold; color:  darkblue">change</a>
+					<div id="account-type-changecontainer" style="display: none">
 						<div>
 							<div style="display: inline-block">Passkey :</div>
 							<div class="ui input" style="display: inline-block"><input id="account-type-passkey" type="password"/></div>
@@ -115,3 +109,9 @@
 <script src="/semantic.min.js" type="text/javascript"></script>
 <script src="/home.js" type="text/javascript"></script>
 <script src="/perfect-scrollbar.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$('#account-type-actionchange').click(function (e)
+	{
+		$('#account-type-changecontainer').show();
+	});
+</script>
