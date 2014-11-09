@@ -36,7 +36,7 @@ $(document).on('click', "div[id^='joingroup-'][id$='-button']", function ()
 	}
 
 });
-	
+
 $('#creategroup-modal-submit').click(function ()
 {
 	var cookies = str_obj(document.cookie);
@@ -96,6 +96,7 @@ $('#creategroup-modal-submit').click(function ()
 			if (status === "success")
 			{
 				$('#creategroup-modal').modal('hide');
+				window.location.href = '/home';
 			} else
 			{
 				//Error handling
