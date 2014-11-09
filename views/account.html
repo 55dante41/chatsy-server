@@ -131,4 +131,29 @@
 	{
 		$('#account-type-changecontainer').show();
 	});
+	$('#account-alias-actionchange-submit').click(function (e)
+	{
+		$.ajax(
+	    {
+	    	url: '/account/changealias',
+	    	type: 'POST',
+	    	data:
+	        {
+	        	'newAlias': $('#account-alias-newalias').val(),
+	        	'confirmNewAlias': $('#account-alias-confirmnewalias').val()
+	        },
+	    	success: function (data, status, jqXHR)
+	    	{
+	    		console.log(data);
+	    		if (data.indexOf('Success') != -1)
+	    		{
+	    			$('#account-alias-changecontainer').hide();
+	    		}
+	    	},
+	    	error: function (jqXHR, err)
+	    	{
+
+	    	}
+	    });
+	});
 </script>

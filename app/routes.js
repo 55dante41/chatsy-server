@@ -98,10 +98,10 @@ module.exports = function (server)
 					}
 					if (docs.length === 0)
 					{
-						reply.view('created', {'alias': Crypter.decrypt(request.state['alias']), 'createdGroups': docs, 'isEmpty': true})
+						reply.view('created', { 'alias': Crypter.decrypt(request.state['alias']), 'createdGroups': docs, 'isEmpty': true })
 					} else
 					{
-						reply.view('created', { 'alias': Crypter.decrypt(request.state['alias']), 'createdGroups': docs, 'isEmpty':false });
+						reply.view('created', { 'alias': Crypter.decrypt(request.state['alias']), 'createdGroups': docs, 'isEmpty': false });
 					}
 				});
 			}
@@ -126,6 +126,46 @@ module.exports = function (server)
 						return;
 					}
 					reply.view('account', { 'user': docs[0], 'alias': Crypter.decrypt(request.state['alias']) });
+				});
+			}
+		}
+	});
+	server.route(
+	{
+		method: 'POST',
+		path: '/account/changealias',
+		handler: function (request, reply)
+		{
+			if (request.state['alias'] != undefined)
+			{
+				console.log(request.state['alias']);
+				Users.findOne({ 'alias': Crypter.decrypt(request.state['alias']) }, function (err, doc)
+				{
+					console.log(doc);
+					if (err)
+					{
+						console.log(err);
+						reply('Error: Database Operation failed');
+						return;
+					}
+					console.log(request.payload);
+					if (request.payload.newAlias == request.payload.confirmNewAlias)
+					{
+						doc.alias = request.payload.newAlias;
+						doc.save(function (err)
+						{
+							if (err)
+							{
+								console.log(err);
+								reply('Error: Database Operation failed');
+								return;
+							}
+							reply('Success: Alias Updated');
+						});
+					} else
+					{
+						reply('Error: Alias mismatch');
+					}
 				});
 			}
 		}
@@ -461,7 +501,7 @@ module.exports = function (server)
 	server.route(
 	{
 		method: 'POST',
-		path: '/user/account-type',
+		path: '/account/changetype',
 		handler: function (request, reply)
 		{
 			if (request.state['alias'] != undefined)
