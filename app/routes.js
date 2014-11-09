@@ -96,7 +96,13 @@ module.exports = function (server)
 						console.log(err);
 						return;
 					}
-					reply.view('created', { 'alias': Crypter.decrypt(request.state['alias']), 'createdGroups': docs });
+					if (docs.length === 0)
+					{
+						reply.view('created', {'alias': Crypter.decrypt(request.state['alias']), 'createdGroups': docs, 'isEmpty': true})
+					} else
+					{
+						reply.view('created', { 'alias': Crypter.decrypt(request.state['alias']), 'createdGroups': docs, 'isEmpty':false });
+					}
 				});
 			}
 		}
