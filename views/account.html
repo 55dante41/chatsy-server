@@ -46,6 +46,19 @@
 					<div id="account-alias-label" style="display:  inline-block; font-size: 1.2em">alias :</div>
 					<div id="account-alias-value" style="display:  inline-block; font-size: 1.5em; font-weight: bold">{{alias}}</div>
 					<a href="#" id="account-alias-actionchange" style="font-size:  1.2em; font-weight:  bold; color:  darkblue">change</a>
+					<div id="account-alias-changecontainer" style="display: none; padding: 5px 0px 5px 50px; min-width: 400px">
+						<div style="margin-top: 5px">
+							<div style="display: inline-block; min-width: 120px">new alias :</div>
+							<div class="ui input" style="display: inline-block; min-width: 230px"><input id="account-alias-newalias" type="text"/></div>
+						</div>
+						<div style="margin-top:  5px">
+							<div style="display: inline-block; min-width:  120px">confirm alias :</div>
+							<div class="ui input" style="display: inline-block; min-width:  230px"><input id="account-alias-confirmnewalias" type="text"/></div>
+						</div>
+						<div style="margin-top:  5px" id="account-alias-actionchange-submit" class="ui button teal">
+							change alias
+						</div>
+					</div>
 				</div>
 				<div id="account-type">
 					<div id="account-type-label" style="display:  inline-block; font-size:  1.2em">status :</div>
@@ -55,17 +68,17 @@
 					{{else}}
 					<div id="account-type-value" style="display:  inline-block; font-size: 1.5em; font-weight: bold">gray</div>
 					<a href="#" id="account-type-actionchange" style="font-size:  1.2em; font-weight:  bold; color:  darkblue">change</a>
-					<div id="account-type-changecontainer" style="display: none">
-						<div>
-							<div style="display: inline-block">Passkey :</div>
-							<div class="ui input" style="display: inline-block"><input id="account-type-passkey" type="password"/></div>
+					<div id="account-type-changecontainer" style="display: none; min-width: 400px; padding: 5px 0px 5px 50px;">
+						<div style="margin-top:  5px">
+							<div style="display: inline-block; min-width:  120px">passkey :</div>
+							<div class="ui input" style="display: inline-block; min-width: 230px"><input id="account-type-passkey" type="password"/></div>
 						</div>
-						<div>
-							<div style="display: inline-block">Confirm Passkey :</div>
-							<div class="ui input" style="display: inline-block"><input id="account-type-confirmpasskey" type="password"/></div>
+						<div style="margin-top: 5px">
+							<div style="display: inline-block; min-width: 120px">confirm passkey :</div>
+							<div class="ui input" style="display: inline-block; min-width:  230px"><input id="account-type-confirmpasskey" type="password"/></div>
 						</div>
-						<div id="account-type-action" class="ui button teal">
-							Make me Persistent!
+						<div style="margin-top: 5px" id="account-type-actionchange-submit" class="ui button teal">
+							change status
 						</div>
 					</div>
 					{{/if}}
@@ -110,6 +123,10 @@
 <script src="/home.js" type="text/javascript"></script>
 <script src="/perfect-scrollbar.min.js" type="text/javascript"></script>
 <script type="text/javascript">
+	$('#account-alias-actionchange').click(function (e)
+	{
+		$('#account-alias-changecontainer').show();
+	});
 	$('#account-type-actionchange').click(function (e)
 	{
 		$('#account-type-changecontainer').show();
