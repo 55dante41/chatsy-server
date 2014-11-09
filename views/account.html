@@ -144,10 +144,14 @@
 	        },
 	    	success: function (data, status, jqXHR)
 	    	{
-	    		console.log(data);
-	    		if (data.indexOf('Success') != -1)
+	    		if (data.success == true)
 	    		{
+	    			Cookie('alias', null, -1);
+	    			Cookie('alias', data.aliasCookie, undefined);
+	    			$('#account-alias-value').text(data.alias);
 	    			$('#account-alias-changecontainer').hide();
+	    			$('#account-alias-newalias').val('');
+					$('#account-alias-confirmnewalias').val('');
 	    		}
 	    	},
 	    	error: function (jqXHR, err)
@@ -156,4 +160,15 @@
 	    	}
 	    });
 	});
+	function Cookie(name, value, minutes)
+	{
+		var expires = "";
+		if (minutes)
+		{
+			var date = new Date();
+			date.setTime(date.getTime() + (minutes * 60 * 1000));
+			expires = "; expires=" + date.toGMTString();
+		}
+		document.cookie = name + "=" + value + expires;
+	}
 </script>

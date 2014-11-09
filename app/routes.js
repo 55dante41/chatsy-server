@@ -138,17 +138,14 @@ module.exports = function (server)
 		{
 			if (request.state['alias'] != undefined)
 			{
-				console.log(request.state['alias']);
 				Users.findOne({ 'alias': Crypter.decrypt(request.state['alias']) }, function (err, doc)
 				{
-					console.log(doc);
 					if (err)
 					{
 						console.log(err);
 						reply('Error: Database Operation failed');
 						return;
 					}
-					console.log(request.payload);
 					if (request.payload.newAlias == request.payload.confirmNewAlias)
 					{
 						doc.alias = request.payload.newAlias;
@@ -160,7 +157,7 @@ module.exports = function (server)
 								reply('Error: Database Operation failed');
 								return;
 							}
-							reply('Success: Alias Updated');
+							reply({'success': true,'aliasCookie':Crypter.encrypt(doc.alias), 'alias':doc.alias});
 						});
 					} else
 					{
