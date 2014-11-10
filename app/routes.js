@@ -417,7 +417,7 @@ module.exports = function (server)
 					{
 						if (result.length > 0)
 						{
-							reply("Failed - Alias already exists");
+							reply({'success': false, 'message': 'Alias already exists'});
 						} else
 						{
 							var newUser = new Users();
@@ -428,10 +428,10 @@ module.exports = function (server)
 								if (err)
 								{
 									console.log(err);
-									reply("Failed - Server error");
+									reply({'success': false, 'message': 'Database operation failed'});
 								} else
 								{
-									reply("Success").state('alias', Crypter.encrypt(request.payload.alias));
+									reply({'success': true, 'message': 'User created successfully'}).state('alias', Crypter.encrypt(request.payload.alias));
 								}
 							});
 						}
@@ -460,7 +460,7 @@ module.exports = function (server)
 								if (err)
 								{
 									console.log(err);
-									reply({ 'success': false, 'message': 'Database Operation Failed' });
+									reply({ 'success': false, 'message': 'Database operation failed' });
 								} else
 								{
 									reply({ 'success': true, 'message': 'User created successfully' }).state('alias', Crypter.encrypt(request.payload.alias));

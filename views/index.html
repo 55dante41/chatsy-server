@@ -37,9 +37,12 @@
 	</div>
 	<div id="status-container">
 		<div class="ui large checkbox top-marginned">
-				<input type="checkbox" id="status-checkbox">
-				<label for="status-checkbox">I am/want to be a green user</label>
-			</div>
+			<input type="checkbox" id="status-checkbox">
+			<label for="status-checkbox">I am/want to be a green user</label>
+		</div>
+	</div>
+	<div id="error-container" style="background-color: #c0392b; color:white;">
+	
 	</div>	
 </div>
 <div style="position:fixed;bottom: 0; width: 99%; background-color: #c0392b; color:white; margin-left: 0.5%; margin-right: 0.5%; margin-bottom: 0.5%; padding: 0.5% 0">
@@ -68,7 +71,7 @@
 					} else
 					{
 						//Error handling
-						console.log(data.message);
+						$('#error-container').append(data.message);
 					}
 				}
 			});
@@ -86,8 +89,8 @@
 						window.location.href = '/home';
 					} else
 					{
-						console.log(data.message);
 						//Error handling
+						$('#error-container').append(data.message);
 					}
 				}
 			});
