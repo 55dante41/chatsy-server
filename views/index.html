@@ -41,7 +41,7 @@
 			<label for="status-checkbox">I am/want to be a green user</label>
 		</div>
 	</div>
-	<div id="error-container" class="ui red message">
+	<div id="error-container" class="ui red message" style="display: none">
 	
 	</div>	
 </div>
@@ -90,7 +90,9 @@
 					} else
 					{
 						//Error handling
+						$('#error-container').empty();
 						$('#error-container').append(data.message);
+						$('#error-container').show();
 					}
 				}
 			});
