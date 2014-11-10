@@ -157,7 +157,7 @@ module.exports = function (server)
 								reply('Error: Database Operation failed');
 								return;
 							}
-							Groups.update({ 'createdBy': Crypter.decrypt(request.state['alias']) },{'createdBy': request.payload.newAlias},{'multi': true}, function (err, groupDocs)
+							Groups.update({ 'createdBy': Crypter.decrypt(request.state['alias']) }, { 'createdBy': request.payload.newAlias }, { 'multi': true }, function (err, groupDocs)
 							{
 								if (err)
 								{
@@ -166,7 +166,7 @@ module.exports = function (server)
 									return;
 								}
 								reply({ 'success': true, 'aliasCookie': Crypter.encrypt(request.payload.newAlias), 'alias': request.payload.newAlias });
-							});							
+							});
 						});
 					} else
 					{
@@ -411,32 +411,67 @@ module.exports = function (server)
 		{
 			if (request.payload.alias != undefined)
 			{
-				Users.find({ alias: request.payload.alias }, function (err, result)
+				if (request.payload.passkey == undefined)
 				{
-					if (result.length > 0)
+					Users.find({ alias: request.payload.alias }, function (err, result)
 					{
-						reply("Failed - Alias already exists");
-					} else
-					{
-						var newUser = new Users();
-						newUser.alias = request.payload.alias;
-						newUser.isPersistent = false;
-						newUser.save(function (err)
+						if (result.length > 0)
 						{
-							if (err)
+							reply("Failed - Alias already exists");
+						} else
+						{
+							var newUser = new Users();
+							newUser.alias = request.payload.alias;
+							newUser.isPersistent = false;
+							newUser.save(function (err)
 							{
-								console.log(err);
-								reply("Failed - Server error");
+								if (err)
+								{
+									console.log(err);
+									reply("Failed - Server error");
+								} else
+								{
+									reply("Success").state('alias', Crypter.encrypt(request.payload.alias));
+								}
+							});
+						}
+					});
+				} else
+				{
+					Users.find({ 'alias': request.payload.alias }, function (err, docs)
+					{
+						if (docs.length > 0)
+						{
+							if (docs[0].validateKey(request.payload.passkey))
+							{
+								reply({ 'success': true, 'message': 'Validation successful' }).state('alias', Crypter.encrypt(request.payload.alias));
 							} else
 							{
-								reply("Success").state('alias', Crypter.encrypt(request.payload.alias));
+								reply({ 'success': false, 'message': 'Validation failed' });
 							}
-						});
-					}
-				});
+						} else
+						{
+							var newUser = new Users();
+							newUser.alias = request.payload.alias;
+							newUser.passkey = newUser.generateHash(request.payload.passkey);
+							newUser.isPersistent = true;
+							newUser.save(function (err)
+							{
+								if (err)
+								{
+									console.log(err);
+									reply({ 'success': false, 'message': 'Database Operation Failed' });
+								} else
+								{
+									reply({ 'success': true, 'message': 'User created successfully' }).state('alias', Crypter.encrypt(request.payload.alias));
+								}
+							});
+						}
+					});
+				}
 			} else
 			{
-				reply("Error");
+				reply({ 'success': false, 'message': 'Invalid Request' });
 			}
 		}
 	});
@@ -530,8 +565,8 @@ module.exports = function (server)
 							{
 								reply('Error - Update failed');
 								return;
-							} 
-							reply({'success' : true, 'message' : 'Account type updated', 'value' : 'white'});							
+							}
+							reply({ 'success': true, 'message': 'Account type updated', 'value': 'white' });
 						});
 					});
 				} else

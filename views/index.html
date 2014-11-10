@@ -15,14 +15,33 @@
 		<a href="/home" style="font-size: 40px; text-decoration: none; padding: 2px"><span style="color: #ffd800;font-weight: bolder">chat</span><span style="color: #b6ff00; font-weight: bold">sy</span></a>
 		alpha
 	</div>
-	
-<div class="ui massive input centered">
-	<input type="text" placeholder="Enter your alias" id="alias-input"/>	
+<div style="display: inline-block; vertical-align: middle; text-align: center">
+	<div id="alias-only-container">
+		<div class="ui massive input" style="vertical-align: middle">
+			<input type="text" placeholder="Enter your alias" id="alias-only-input"/>	
+		</div>
+		<div class="ui massive button" style="vertical-align: middle" id="alias-only-submit">
+			Done
+		</div>
+	</div>
+	<div id="alias-passkey-container" style="display: none">
+		<div class="ui massive input" style="vertical-align: middle">
+			<input type="text" placeholder="Enter your alias" id="alias-input"/>	
+		</div>
+		<div class="ui massive input" style="vertical-align: middle">
+			<input type="password" placeholder="Passkey" id="passkey-input"/>			
+		</div>
+		<div class="ui massive button" style="vertical-align: middle" id="alias-passkey-submit">
+			Done
+		</div>
+	</div>
+	<div id="status-container">
+		<div class="ui large checkbox top-marginned">
+				<input type="checkbox" id="status-checkbox">
+				<label for="status-checkbox">I am/want to be a green user</label>
+			</div>
+	</div>	
 </div>
-<div class="ui massive button centered" id="alias-submit">
-	Done
-</div>
-
 <div style="position:fixed;bottom: 0; width: 99%; background-color: #c0392b; color:white; margin-left: 0.5%; margin-right: 0.5%; margin-bottom: 0.5%; padding: 0.5% 0">
 		As an anonymous user, you can use an alias to browse/join groups according to the respective restrictions.
 	<br/>
@@ -33,20 +52,50 @@
 </html>
 <script src="/jquery.min.js" type="text/javascript"></script>
 <script>
-	$('document').ready(function() {
-	$('#alias-submit').click(function() {
-		$.ajax({
-			type: 'POST',
-			url: '/',
-			data: {'alias':$('#alias-input').val()},
-			success: function(data, status, jqXHR) {
-				if(status === "success") {
-					window.location.href = '/home';
-				} else {
-					//Error handling
+	$('document').ready(function ()
+	{
+		$('#alias-only-submit').click(function ()
+		{
+			$.ajax({
+				type: 'POST',
+				url: '/',
+				data: { 'alias': $('#alias-only-input').val(), 'passkey': undefined },
+				success: function (data, status, jqXHR)
+				{
+					if (data.success)
+					{
+						window.location.href = '/home';
+					} else
+					{
+						//Error handling
+						console.log(data.message);
+					}
 				}
-			}		
+			});
 		});
-	});
+		$('#alias-passkey-submit').click(function ()
+		{
+			$.ajax({
+				type: 'POST',
+				url: '/',
+				data: { 'alias': $('#alias-input').val(), 'passkey': $('#passkey-input').val() },
+				success: function (data, status, jqXHR)
+				{
+					if (data.success)
+					{
+						window.location.href = '/home';
+					} else
+					{
+						console.log(data.message);
+						//Error handling
+					}
+				}
+			});
+		});
+		$('#status-checkbox').click(function ()
+		{
+			$('#alias-only-container').toggle();
+			$('#alias-passkey-container').toggle();
+		});
 	});
 </script>
