@@ -157,7 +157,7 @@ module.exports = function (server)
 								reply('Error: Database Operation failed');
 								return;
 							}
-							Groups.find({ 'createdBy': Crypter.decrypt(request.state['alias']) }, function (err, groupDocs)
+							Groups.update({ 'createdBy': Crypter.decrypt(request.state['alias']) },{'createdBy': request.payload.newAlias},{'multi': true}, function (err, groupDocs)
 							{
 								if (err)
 								{
@@ -165,18 +165,7 @@ module.exports = function (server)
 									reply('Error: Database Operation failed');
 									return;
 								}
-								for (var groupDoc in groupDocs)
-								{
-									groupDoc.createdBy = doc.alias;
-									groupDoc.save(function (err)
-									{
-										if (err)
-										{
-											console.log(err);
-										}
-									});
-								}
-								reply({ 'success': true, 'aliasCookie': Crypter.encrypt(doc.alias), 'alias': doc.alias });
+								reply({ 'success': true, 'aliasCookie': Crypter.encrypt(request.payload.newAlias), 'alias': request.payload.newAlias });
 							});							
 						});
 					} else
