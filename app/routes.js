@@ -530,10 +530,8 @@ module.exports = function (server)
 							{
 								reply('Error - Update failed');
 								return;
-							} else
-							{
-								reply('Success');
-							}
+							} 
+							reply({'success' : true, 'message' : 'Account type updated', 'value' : 'white'});							
 						});
 					});
 				} else

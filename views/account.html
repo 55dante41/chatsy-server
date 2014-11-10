@@ -160,6 +160,33 @@
 	    	}
 	    });
 	});
+	$('#account-type-actionchange-submit').click(function (e)
+	{
+		$.ajax(
+	    {
+	    	url: '/account/changetype',
+	    	type: 'POST',
+	    	data:
+	        {
+	        	'passkey': $('#account-type-passkey').val(),
+	        	'confirmPasskey': $('#account-type-confirmpasskey').val()
+	        },
+	    	success: function (data, status, jqXHR)
+	    	{
+	    		if (data.success == true)
+	    		{
+	    			$('#account-type-value').text(data.value);
+	    			$('#account-type-changecontainer').hide();
+	    			$('#account-type-passkey').val('');
+					$('#account-type-confirmpasskey').val('');
+	    		}
+	    	},
+	    	error: function (jqXHR, err)
+	    	{
+
+	    	}
+	    });
+	});
 	function Cookie(name, value, minutes)
 	{
 		var expires = "";
