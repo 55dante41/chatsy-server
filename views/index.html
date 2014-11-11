@@ -80,6 +80,7 @@
 		});
 		$('#alias-passkey-submit').click(function ()
 		{
+			$('#alias-input').val($('#alias-only-input').val());
 			$.ajax({
 				type: 'POST',
 				url: '/',
