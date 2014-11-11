@@ -417,7 +417,7 @@ module.exports = function (server)
 					{
 						if (result.length > 0)
 						{
-							reply({'success': false, 'message': 'Alias already exists'});
+							reply({ 'success': false, 'message': 'Alias already exists' });
 						} else
 						{
 							var newUser = new Users();
@@ -428,10 +428,10 @@ module.exports = function (server)
 								if (err)
 								{
 									console.log(err);
-									reply({'success': false, 'message': 'Database operation failed'});
+									reply({ 'success': false, 'message': 'Database operation failed' });
 								} else
 								{
-									reply({'success': true, 'message': 'User created successfully'}).state('alias', Crypter.encrypt(request.payload.alias));
+									reply({ 'success': true, 'message': 'User created successfully' }).state('alias', Crypter.encrypt(request.payload.alias));
 								}
 							});
 						}
@@ -489,15 +489,40 @@ module.exports = function (server)
 				newGroup.createdBy = Crypter.decrypt(request.payload.alias);
 				newGroup.isPrivate = request.payload.isPrivate;
 				newGroup.isVisible = request.payload.isVisible;
+				newGroup.accessingUsers = [];
+				newGroup.accessingUsers.push(Crypter.decrypt(request.payload.alias));
 				newGroup.save(function (err)
 				{
 					if (err)
 					{
-						reply(err.message);
-					} else
-					{
-						reply("Success");
+						console.log(err);
+						return;
 					}
+					Users.find({ 'alias': Crypter.decrypt(request.payload.alias) }, function (err, docs)
+					{
+						if (err)
+						{
+							console.log(err);
+							return;
+						}
+						if (docs.length > 0)
+						{
+							docs[0].accessibleGroups = [];
+							docs[0].accessibleGroups.push(newGroup._id.toString());
+							docs[0].save(function (err)
+							{
+								if (err)
+								{
+									console.log(err);
+									return;
+								}
+								reply({ 'success': true, 'message': 'Group created successfully' });
+							});
+						} else
+						{
+							reply({ 'success': false, 'message': 'Invalid alias' });
+						}
+					});
 				});
 			} else
 			{

@@ -9,7 +9,8 @@ var groupsSchema = new schema({
 	createdBy : {type: String, required: false},
 	admins : [{type: String}],
 	isPrivate : {type: Boolean},
-	isVisible : {type: Boolean}
+	isVisible : {type: Boolean},
+	accessingUsers : [{type: String}]
 });
 
 //Generate a hash for the key
