@@ -102,6 +102,7 @@
 		});
 		$('#status-checkbox').click(function ()
 		{
+			$('#alias-input').val($('#alias-only-input').val());
 			$('#alias-only-container').toggle();
 			$('#alias-passkey-container').toggle();
 		});
