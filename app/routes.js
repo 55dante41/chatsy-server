@@ -606,4 +606,37 @@ module.exports = function (server)
 			}
 		}
 	});
+	server.route(
+	{
+		method: 'POST',
+		path: '/groups/{id}/invite',
+		handler: function (request, reply)
+		{
+			if (request.state['alias'] == undefined)
+			{
+				reply({ 'success': false, 'message': 'Invalid source' });
+			} else
+			{
+				Groups.find({ '_id': id }, function (err, docs)
+				{
+					if (err)
+					{
+						console.log(err);
+						reply({ 'success': false, 'message': 'Internal Server Error' });
+						return;
+					}
+					docs[0].accessingUsers.push(request.payload.accessingUsers.split(','));
+					docs[0].save(function (err)
+					{
+						if (err)
+						{
+							console.log(err);
+							reply({ 'success': false, 'message': 'Database operation failed' });
+						}
+						reply({ 'success': true, 'message': 'Preferences updated successfully' });
+					})
+				});
+			}
+		}
+	});
 };

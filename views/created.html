@@ -99,8 +99,7 @@
 								Description :
 							</div>
 							<div class="ui input" style="width: 84%">
-								<textarea id="settings-{{this._id}}-description-input" rows="3" style="width:  100%">									
-								</textarea>
+								<input id="settings-{{this._id}}-description-input" type="text">
 							</div>
 								</div>
 							<div id="settings-{{this._id}}-currentpasskey-container" style="margin-top: 5px">
@@ -158,6 +157,17 @@
 										<button>Change</button>
 									</div>								
 								{{/if}}								
+							</div>
+						</div>
+						<div class="sixteen wide column" id="invites-{{this._id}}-actioncontainer" style="display: none;">
+							<div class="ui input" style="width: 60%">
+								<input type="text" id="invites-{{this._id}}-input" placeholder="Enter aliases you want to invite seperated by commas"/>
+							</div>
+							<div class="ui green button" id="invites-{{this._id}}-doneaction">
+								Done
+							</div>
+							<div class="ui message" style="display:  none" id="invites-{{this._id}}-doneresponse">
+								
 							</div>
 						</div>
 						<div class="sixteen wide column" id="settings-{{this._id}}-actioncontainer" style="display: none; text-align: right">
@@ -231,7 +241,39 @@
 	$(document).on('click', "div[id^='settings-'][id$='-saveaction']", function ()
 	{
 		var groupId = $(this).attr('id').split('-')[1];
-		
+	});
+
+	$(document).on('click', "div[id^='invite-'][id$='-button']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+		$('#invites-' + groupId + '-actioncontainer').show();
+	});
+	$(document).on('click', "div[id^='invites-'][id$='-actiondone']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+		$.ajax(
+	    {
+	    	type: 'POST',
+	    	url: '/groups/' + groupId + '/invite',
+	    	data:
+	        {
+	        	'users': $('#invites-' + groupId + '-input').val()
+	        },
+	    	success: function (data, status, jqXHR)
+	    	{
+	    		if (data.success)
+	    		{
+	    			$('#invites-' + groupId + '-doneresponse').empty();
+	    			$('#invites-' + groupId + '-doneresponse').append(data.message);
+	    			$('#invites-' + groupId + '-doneresponse').show();
+	    		} else
+	    		{
+	    			$('#invites-' + groupId + '-doneresponse').empty();
+	    			$('#invites-' + groupId + '-doneresponse').append(data.message);
+					$('#invites-' + groupId + '-doneresponse').show();
+	    		}
+	    	}
+	    });
 	});
 
 </script>
