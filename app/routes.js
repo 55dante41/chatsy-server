@@ -617,7 +617,7 @@ module.exports = function (server)
 				reply({ 'success': false, 'message': 'Invalid source' });
 			} else
 			{
-				Groups.find({ '_id': id }, function (err, docs)
+				Groups.find({ '_id': request.params.id }, function (err, docs)
 				{
 					if (err)
 					{
@@ -625,7 +625,11 @@ module.exports = function (server)
 						reply({ 'success': false, 'message': 'Internal Server Error' });
 						return;
 					}
-					docs[0].accessingUsers.push(request.payload.accessingUsers.split(','));
+					var users = request.payload.users.split(',');
+					for (var i = 0; i < users.length; i++ )
+					{
+						docs[0].accessingUsers.push(users[i]);
+					}
 					docs[0].save(function (err)
 					{
 						if (err)
