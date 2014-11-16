@@ -487,10 +487,14 @@ module.exports = function (server)
 				newGroup.description = request.payload.description;
 				newGroup.passkey = newGroup.generateHash(request.payload.key);
 				newGroup.createdBy = Crypter.decrypt(request.payload.alias);
+				newGroup.createdOn = Date();
 				newGroup.isPrivate = request.payload.isPrivate;
 				newGroup.isVisible = request.payload.isVisible;
-				newGroup.accessingUsers = [];
-				newGroup.accessingUsers.push(Crypter.decrypt(request.payload.alias));
+				newGroup.authorizedUsers = [];
+				newGroup.unauthorizedUsers = [];
+				newGroup.admins = [];
+				newGroup.authorizedUsers.push(Crypter.decrypt(request.payload.alias));
+				newGroup.admins.push(Crypter.decrypt(request.payload.alias));
 				newGroup.save(function (err)
 				{
 					if (err)
@@ -626,9 +630,9 @@ module.exports = function (server)
 						return;
 					}
 					var users = request.payload.users.split(',');
-					for (var i = 0; i < users.length; i++ )
+					for (var i = 0; i < users.length; i++)
 					{
-						docs[0].accessingUsers.push(users[i].trim());
+						docs[0].authorizedUsers.push(users[i].trim());
 					}
 					docs[0].save(function (err)
 					{
