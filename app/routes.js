@@ -628,7 +628,7 @@ module.exports = function (server)
 					var users = request.payload.users.split(',');
 					for (var i = 0; i < users.length; i++ )
 					{
-						docs[0].accessingUsers.push(users[i]);
+						docs[0].accessingUsers.push(users[i].trim());
 					}
 					docs[0].save(function (err)
 					{
