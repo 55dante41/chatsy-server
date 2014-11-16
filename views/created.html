@@ -35,7 +35,7 @@
 						Created groups
 					</a>
 					<a class="item" id="starred-button">
-						Starred/Bookmarked
+						My groups
 					</a>
 					<a class="item" id="account-button">
 						Account
@@ -44,11 +44,15 @@
 			</div>
 			<div class="thirteen wide column" style="padding: 20px; height: 100%;overflow: auto; background-color: DarkGray; padding-top:  5px" id="createdgroups-container">
 				<div class="ui grid" id="createdgroups-list">
-					{{#if isEmpty}}
-					   <span style="font-size: 1.2em; color:  white">
+					{{#if isEmpty
+					<div class="row" style="padding:  10px">
+						<div class="sixteen wide column">
+							<span style="font-size: 1.5em; color:  white">
 						   Whoops! You haven't created any groups. To create one, click on "Create Group" in the sidebar. 
 						   To browse groups, click on "Browse Groups" in the sidebar.
-					   </span>
+					   </span> 
+						</div>
+					</div>					   
 					{{else}}
 				{{#each createdGroups}}
 					<div class="row" style="padding: 10px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray; margin-left:  10px; margin-right:  10px; margin-top:  5px">
