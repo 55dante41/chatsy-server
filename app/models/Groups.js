@@ -6,11 +6,14 @@ var groupsSchema = new schema({
 	name : {type: String, required: true},
 	description : {type: String, required: false},
 	passkey : {type: String},
-	createdBy : {type: String, required: false},
-	admins : [{type: String}],
 	isPrivate : {type: Boolean},
 	isVisible : {type: Boolean},
-	accessingUsers : [{type: String}]
+	tags : [{type: String}],
+	createdBy : {type: String},
+	createdOn : {type: Date, 'default': Date.now},
+	admins : [{type: String}],
+	authorizedUsers : [{type: String}],
+	unauthorizedUsers : [{type: String}]
 });
 
 //Generate a hash for the key

@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 	
 var usersSchema = new schema({
 	alias : {type: String, required: true},
-	lastInteractedOn : {type: Date, default: Date.now, required: true},
+	lastInteractedOn : {type: Date, 'default': Date.now, required: true},
 	isPersistent: {type: Boolean, required: true},
 	passkey : {type: String},
 	accessibleGroups : [{type: String, required: false}]
