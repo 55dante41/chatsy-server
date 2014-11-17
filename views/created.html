@@ -82,11 +82,11 @@
 							{{/if}}
 						</div>
 						<div class="sixteen wide column" style="text-align: right">
-							<div class="ui red button" style="margin-left:0.2rem" id="block-{{this._id}}-button">
-								Block
+							<div class="ui red button" style="margin-left:0.2rem" id="blockusers-{{this._id}}-button">
+								Block Users
 							</div>
-							<div class="ui green button" style="margin-left:0.2rem"  id="invite-{{this._id}}-button">
-								Invite
+							<div class="ui green button" style="margin-left:0.2rem"  id="addusers-{{this._id}}-button">
+								Add Users
 							</div>
 							<div class="ui button" style="margin-left:0.2rem" id="settings-{{this._id}}-button">
 								Settings
@@ -166,14 +166,25 @@
 								{{/if}}								
 							</div>
 						</div>
-						<div class="sixteen wide column" id="invites-{{this._id}}-actioncontainer" style="display: none;margin-top:  10px">
+						<div class="sixteen wide column" id="addusers-{{this._id}}-actioncontainer" style="display: none;margin-top:  10px">
 							<div class="ui input" style="width: 60%">
-								<input type="text" id="invites-{{this._id}}-input" placeholder="Enter aliases you want to invite seperated by commas"/>
+								<input type="text" id="addusers-{{this._id}}-input" placeholder="Enter aliases you want to add seperated by commas"/>
 							</div>
-							<div class="ui green button" id="invites-{{this._id}}-doneaction">
+							<div class="ui green button" id="addusers-{{this._id}}-doneaction">
 								Done
 							</div>
-							<div class="ui message" style="display:  none" id="invites-{{this._id}}-doneresponse">
+							<div class="ui message" style="display:  none" id="addusers-{{this._id}}-doneresponse">
+								
+							</div>
+						</div>
+						<div class="sixteen wide column" id="blockusers-{{this._id}}-actioncontainer" style="display: none;margin-top:  10px">
+							<div class="ui input" style="width: 60%">
+								<input type="text" id="blockusers-{{this._id}}-input" placeholder="Enter aliases you want to add seperated by commas"/>
+							</div>
+							<div class="ui green button" id="blockusers-{{this._id}}-doneaction">
+								Done
+							</div>
+							<div class="ui message" style="display:  none" id="blockusers-{{this._id}}-doneresponse">
 								
 							</div>
 						</div>
@@ -249,13 +260,17 @@
 	{
 		var groupId = $(this).attr('id').split('-')[1];
 	});
-
-	$(document).on('click', "div[id^='invite-'][id$='-button']", function ()
+	$(document).on('click', "div[id^='addusers-'][id$='-button']", function ()
 	{
 		var groupId = $(this).attr('id').split('-')[1];
-		$('#invites-' + groupId + '-actioncontainer').show();
+		$('#addusers-' + groupId + '-actioncontainer').show();
 	});
-	$(document).on('click', "div[id^='invites-'][id$='-doneaction']", function ()
+	$(document).on('click', "div[id^='blockusers-'][id$='-button']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+		$('#blockusers-' + groupId + '-actioncontainer').show();
+	});
+	$(document).on('click', "div[id^='addusers-'][id$='-doneaction']", function ()
 	{
 		var groupId = $(this).attr('id').split('-')[1];
 		$.ajax(
@@ -264,23 +279,49 @@
 	    	url: '/groups/' + groupId + '/invite',
 	    	data:
 	        {
-	        	'users': $('#invites-' + groupId + '-input').val()
+	        	'users': $('#addusers-' + groupId + '-input').val()
 	        },
 	    	success: function (data, status, jqXHR)
 	    	{
 	    		if (data.success)
 	    		{
-	    			$('#invites-' + groupId + '-doneresponse').empty();
-	    			$('#invites-' + groupId + '-doneresponse').append(data.message);
-	    			$('#invites-' + groupId + '-doneresponse').show();
+	    			$('#addusers-' + groupId + '-doneresponse').empty();
+	    			$('#addusers-' + groupId + '-doneresponse').append(data.message);
+	    			$('#addusers-' + groupId + '-doneresponse').show();
 	    		} else
 	    		{
-	    			$('#invites-' + groupId + '-doneresponse').empty();
-	    			$('#invites-' + groupId + '-doneresponse').append(data.message);
-					$('#invites-' + groupId + '-doneresponse').show();
+	    			$('#addusers-' + groupId + '-doneresponse').empty();
+	    			$('#addusers-' + groupId + '-doneresponse').append(data.message);
+					$('#addusers-' + groupId + '-doneresponse').show();
 	    		}
 	    	}
 	    });
 	});
-
+	$(document).on('click', "div[id^='blockusers-'][id$='-doneaction']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+		$.ajax(
+	    {
+	    	type: 'POST',
+	    	url: '/groups/' + groupId + '/block',
+	    	data:
+	        {
+	        	'users': $('#blockusers-' + groupId + '-input').val()
+	        },
+	    	success: function (data, status, jqXHR)
+	    	{
+	    		if (data.success)
+	    		{
+	    			$('#blockusers-' + groupId + '-doneresponse').empty();
+	    			$('#blockusers-' + groupId + '-doneresponse').append(data.message);
+	    			$('#blockusers-' + groupId + '-doneresponse').show();
+	    		} else
+	    		{
+	    			$('#blockusers-' + groupId + '-doneresponse').empty();
+	    			$('#blockusers-' + groupId + '-doneresponse').append(data.message);
+					$('#blockusers-' + groupId + '-doneresponse').show();
+	    		}
+	    	}
+	    });
+	});
 </script>
