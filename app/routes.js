@@ -613,7 +613,7 @@ module.exports = function (server)
 	server.route(
 	{
 		method: 'POST',
-		path: '/groups/{id}/invite',
+		path: '/groups/{id}/addusers',
 		handler: function (request, reply)
 		{
 			if (request.state['alias'] == undefined)
@@ -633,6 +633,43 @@ module.exports = function (server)
 					for (var i = 0; i < users.length; i++)
 					{
 						docs[0].authorizedUsers.push(users[i].trim());
+					}
+					docs[0].save(function (err)
+					{
+						if (err)
+						{
+							console.log(err);
+							reply({ 'success': false, 'message': 'Database operation failed' });
+						}
+						reply({ 'success': true, 'message': 'Preferences updated successfully' });
+					})
+				});
+			}
+		}
+	});
+	server.route(
+	{
+		method: 'POST',
+		path: '/groups/{id}/blockusers',
+		handler: function (request, reply)
+		{
+			if (request.state['alias'] == undefined)
+			{
+				reply({ 'success': false, 'message': 'Invalid source' });
+			} else
+			{
+				Groups.find({ '_id': request.params.id }, function (err, docs)
+				{
+					if (err)
+					{
+						console.log(err);
+						reply({ 'success': false, 'message': 'Internal Server Error' });
+						return;
+					}
+					var users = request.payload.users.split(',');
+					for (var i = 0; i < users.length; i++)
+					{
+						docs[0].unauthorizedUsers.push(users[i].trim());
 					}
 					docs[0].save(function (err)
 					{

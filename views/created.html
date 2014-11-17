@@ -276,7 +276,7 @@
 		$.ajax(
 	    {
 	    	type: 'POST',
-	    	url: '/groups/' + groupId + '/invite',
+	    	url: '/groups/' + groupId + '/addusers',
 	    	data:
 	        {
 	        	'users': $('#addusers-' + groupId + '-input').val()
@@ -303,7 +303,7 @@
 		$.ajax(
 	    {
 	    	type: 'POST',
-	    	url: '/groups/' + groupId + '/block',
+	    	url: '/groups/' + groupId + '/blockusers',
 	    	data:
 	        {
 	        	'users': $('#blockusers-' + groupId + '-input').val()
