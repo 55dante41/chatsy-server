@@ -7,7 +7,8 @@ var usersSchema = new schema({
 	lastInteractedOn : {type: Date, 'default': Date.now, required: true},
 	isPersistent: {type: Boolean, required: true},
 	passkey : {type: String},
-	accessibleGroups : [{type: String, required: false}]
+	authorizedInGroups : [{type: String, required: false}],
+	unauthorizedInGroups: [{type: String, required: false}]
 });
 
 //Generate a hash for the key

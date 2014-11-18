@@ -630,9 +630,29 @@ module.exports = function (server)
 						return;
 					}
 					var users = request.payload.users.split(',');
+					var failedTransactions = [];
 					for (var i = 0; i < users.length; i++)
 					{
-						docs[0].authorizedUsers.push(users[i].trim());
+						Users.findOne({ 'alias': users[i] }, function (err, doc)
+						{
+							if (doc && doc.isPersistent)
+							{
+								doc.authorizedInGroups = [];
+								doc.authorizedInGroups.push(request.params.id);
+								doc.save(function (err)
+								{
+									if (err)
+									{
+										console.log(err);
+										failedTransactions.push(doc.alias + ' - Update failed for alias');
+									}
+									docs[0].authorizedUsers.push(users[i].trim());
+								})
+							} else
+							{
+								failedTransactions.push(users[i] + ' - Alias does not exist or is a gray user');
+							}
+						});
 					}
 					docs[0].save(function (err)
 					{
@@ -641,7 +661,7 @@ module.exports = function (server)
 							console.log(err);
 							reply({ 'success': false, 'message': 'Database operation failed' });
 						}
-						reply({ 'success': true, 'message': 'Preferences updated successfully' });
+						reply({ 'success': true, 'message': 'Preferences updated successfully', 'data': failedTransactions });
 					})
 				});
 			}
@@ -667,9 +687,29 @@ module.exports = function (server)
 						return;
 					}
 					var users = request.payload.users.split(',');
+					var failedTransactions = [];
 					for (var i = 0; i < users.length; i++)
 					{
-						docs[0].unauthorizedUsers.push(users[i].trim());
+						Users.findOne({ 'alias': users[i] }, function (err, doc)
+						{
+							if (doc && doc.isPersistent)
+							{
+								doc.unauthorizedInGroups = [];
+								doc.unauthorizedInGroups.push(request.params.id);
+								doc.save(function (err)
+								{
+									if (err)
+									{
+										console.log(err);
+										failedTransactions.push(doc.alias + ' - Update failed for alias');
+									}
+									docs[0].unauthorizedUsers.push(users[i].trim());
+								})
+							} else
+							{
+								failedTransactions.push(users[i] + ' - Alias does not exist or is a gray user');
+							}
+						});
 					}
 					docs[0].save(function (err)
 					{
@@ -678,7 +718,7 @@ module.exports = function (server)
 							console.log(err);
 							reply({ 'success': false, 'message': 'Database operation failed' });
 						}
-						reply({ 'success': true, 'message': 'Preferences updated successfully' });
+						reply({ 'success': true, 'message': 'Preferences updated successfully', 'data': failedTransactions });
 					})
 				});
 			}
