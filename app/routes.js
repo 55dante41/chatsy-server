@@ -64,20 +64,19 @@ module.exports = function (server)
 		{
 			if (request.state['alias'] == undefined)
 			{
-				//User not logged in
-				reply.redirect('/');
+				reply({'success':false, 'message':'Invalid Alias', 'data':[]});
 			} else
 			{
-				//User logged in
-				var groups = {};
-				Groups.find({ 'isVisible': true }, function (err, groups)
+				Groups
+				.find({ 'isVisible': true })
+				.select('name description createdBy createdOn tags isPrivate')
+				.exec(function (err, groups)
 				{
-					reply(groups);
+					reply({'success':true, 'message': 'Groups fetched successfully', 'data':groups});
 				});
 			}
 		}
 	});
-
 	server.route(
 	{
 		method: 'GET',

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>{{alias}} - Created Groups | chatsy</title>
+		<link href="/favicon.ico" rel="icon" type="image/x-icon" />
+	<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<link href="/semantic.min.css" rel="stylesheet" type="text/css"/>
+	<link href="/chatsy.css" rel="stylesheet" type="text/css"/>	
+	<link href="/perfect-scrollbar.min.css" rel="stylesheet"  type="text/css"/>
+	<style>
+	 .ui.grid>.row {
+		 width:	initial!important;
+ 	}
+	 
+	</style>
+    </head>
+    <body class="fonts-default" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: 0">
+	<div class="ui inverted" id="header" style="width: 100%; height: 50px; background-color: #000; color: #fff">
+		<a href="/home" style="font-size: 40px; text-decoration: none; padding: 2px"><span style="color: #ffd800;font-weight: bolder">chat</span><span style="color: #b6ff00; font-weight: bold">sy</span></a>
+		alpha
+		<div class="ui input" style="position: absolute; top: 5px; right:  5px; width:  25%">
+			<input type="text" id="createdgroups-search-input" placeholder="Search Groups..."/>
+		</div>
+	</div>
+	<div class="ui grid" id="body" style="width:100%; height: 100%; position: absolute; top: 50px;">
+		<div class="row" style="height: 100%">
+			<div class="three wide column" id="options-sidebar" style="padding: 0; height: 100%">
+				<div class="ui inverted vertical menu" style="border-radius: 0; width: 100%; height: 100%">
+					<a class="item" id="browsegroups-button">
+						Browse groups
+					</a>
+					<a class="item" id="creategroup-button">
+						Create a group
+					</a>
+					<a class="active item" id="createdgroups-button">
+						Created groups
+					</a>
+					<a class="item" id="starred-button">
+						My groups
+					</a>
+					<a class="item" id="account-button">
+						Account
+					</a>
+				</div>
+			</div>
+			<div class="thirteen wide column" style="padding: 20px; height: 100%;overflow: auto; background-color: DarkGray; padding-top:  5px" id="createdgroups-container">
+				<div class="ui grid" id="createdgroups-list">
+					{{#if isEmpty}}
+					<div class="row" style="padding:  10px">
+						<div class="sixteen wide column">
+							<span style="font-size: 1.5em; color:  white">
+						   Whoops! You haven't created any groups. To create one, click on "Create Group" in the sidebar. 
+						   To browse groups, click on "Browse Groups" in the sidebar.
+					   </span> 
+						</div>
+					</div>					   
+					{{else}}
+				{{#each createdGroups}}
+					<div class="row" style="padding: 10px; background-color: #efefef; box-shadow: 1px 1px 1px 1px gray; margin-left:  10px; margin-right:  10px; margin-top:  5px">
+						<div class="twelve wide column">
+							<p class="ui header">
+							  {{this.name}} 
+							</p>
+							<p>
+							  {{this.description}}
+							</p>
+						</div>
+						<div class="four wide column" style="text-align: right">
+							{{#if this.isPrivate}}
+							<div class="ui action input">
+								<input type="password" id="joingroup-{{this._id}}-passkey-input" placeholder="Passkey"/>
+								<div class="ui button teal" id="joingroup-{{this._id}}-button">
+									Join
+								</div>
+							</div>
+							{{else}}
+								<div class="ui button teal" id="joingroup-{{this._id}}-button">
+									Join
+								</div>
+							{{/if}}
+						</div>
+						<div class="sixteen wide column" style="text-align: right">
+							<div class="ui red button" style="margin-left:0.2rem" id="blockusers-{{this._id}}-button">
+								Block Users
+							</div>
+							<div class="ui green button" style="margin-left:0.2rem"  id="addusers-{{this._id}}-button">
+								Add Users
+							</div>
+							<div class="ui button" style="margin-left:0.2rem" id="settings-{{this._id}}-button">
+								Settings
+							</div>
+						</div>
+						<div id="settings-{{this._id}}-container" class="sixteen wide column" style="margin-top: 10px; display: none">
+							<div id="settings-{{this._id}}-name-container">
+							<div id="settings-{{this._id}}-name-label" style="width: 15%; display: inline-block">
+								Name :
+							</div>
+							<div class="ui input" style="width: 84%">
+								<input type="text" id="settings-{{this._id}}-name-input" />
+							</div>
+								</div>
+							<div id="settings-{{this._id}}-description-container" style="margin-top: 5px">
+							<div id="settings-{{this._id}}-description-label" style="width: 15%; display: inline-block">
+								Description :
+							</div>
+							<div class="ui input" style="width: 84%">
+								<input id="settings-{{this._id}}-description-input" type="text">
+							</div>
+								</div>
+							<div id="settings-{{this._id}}-currentpasskey-container" style="margin-top: 5px">
+								<div id="settings-{{this._id}}-currentpasskey-label" style="width: 15%; display: inline-block">
+									Current Passkey :
+								</div>
+								<div class="ui input" style="width: 25%">
+									<input type="password" id="settings-{{this._id}}-currentpasskey-input" />
+								</div>
+							</div>
+							<div id="settings-{{this._id}}-newpasskey-container" style="margin-top: 5px">
+								<div id="settings-{{this._id}}-newpasskey-label" style="width: 15%; display: inline-block">
+									New Passkey :
+								</div>
+								<div class="ui input" style="width: 25%">
+									<input type="password" id="settings-{{this._id}}-newpasskey-input" />
+								</div>
+							</div>
+							<div id="settings-{{this._id}}-confirmpasskey-container" style="margin-top: 5px">
+								<div id="settings-{{this._id}}-confirmpasskey-label" style="width: 15%; display: inline-block">
+									Confirm Passkey :
+								</div>
+								<div class="ui input" style="width: 25%">
+									<input type="password" id="settings-{{this._id}}-confirmpasskey-input" />
+								</div>
+							</div>
+							<div id="settings-{{this._id}}-visibility-container" style="margin-top: 5px">
+								<div id="settings-{{this._id}}-visibility-label" style="width: 15%; display: inline-block">
+									Visibility :
+								</div>
+								{{#if this.isVisible}}
+									<div style="display:  inline-block; width:  84%">
+										Visible to all
+										<button>Change</button>
+									</div>									
+								{{else}}
+									<div style="display:  inline-block; width:  84%">
+										Visible to Selected
+										<button>Change</button>
+									</div>								
+								{{/if}}								
+							</div>
+							<div id="settings-{{this._id}}-privacy-container" style="margin-top: 5px">
+								<div id="settings-{{this._id}}-privacy-label" style="width: 15%; display: inline-block">
+									Privacy :
+								</div>
+								{{#if this.isPrivate}}
+									<div style="display:  inline-block; width:  84%">
+										Private
+										<button>Change</button>
+									</div>									
+								{{else}}
+									<div style="display:  inline-block; width:  84%">
+										Public
+										<button>Change</button>
+									</div>								
+								{{/if}}								
+							</div>
+						</div>
+						<div class="sixteen wide column" id="addusers-{{this._id}}-actioncontainer" style="display: none;margin-top:  10px">
+							<div class="ui input" style="width: 60%">
+								<input type="text" id="addusers-{{this._id}}-input" placeholder="Enter aliases you want to add seperated by commas"/>
+							</div>
+							<div class="ui green button" id="addusers-{{this._id}}-doneaction">
+								Done
+							</div>
+							<div class="ui message" style="display:  none" id="addusers-{{this._id}}-doneresponse">
+								
+							</div>
+						</div>
+						<div class="sixteen wide column" id="blockusers-{{this._id}}-actioncontainer" style="display: none;margin-top:  10px">
+							<div class="ui input" style="width: 60%">
+								<input type="text" id="blockusers-{{this._id}}-input" placeholder="Enter aliases you want to block seperated by commas"/>
+							</div>
+							<div class="ui green button" id="blockusers-{{this._id}}-doneaction">
+								Done
+							</div>
+							<div class="ui message" style="display:  none" id="blockusers-{{this._id}}-doneresponse">
+								
+							</div>
+						</div>
+						<div class="sixteen wide column" id="settings-{{this._id}}-actioncontainer" style="display: none; text-align: right">
+							<div class="ui green button" id="settings-{{this._id}}-doneaction">
+								Done
+							</div>
+							<div class="ui button" id="settings={{this._id}}-saveaction">
+								Save
+							</div>
+						</div>
+					</div>									
+				{{/each}}
+					{{/if}}
+				</div>
+			</div>			
+			
+		</div>
+	</div>
+
+	<div class="ui modal" id="creategroup-modal">
+		<div class="header">
+			Create a Group
+		</div>
+		<div class="content">
+			<div class="ui fluid input">
+				<input type="text" id="creategroup-name-input" placeholder="Name"/>
+			</div>
+			<div class="ui fluid input top-marginned">
+				<input type="text" id="creategroup-description-input" placeholder="Description" style="resize: none; width: 100%"></textarea>
+			</div>
+			<div class="ui large checkbox top-marginned">
+				<input type="checkbox" id="creategroup-visibility-checkbox">
+				<label for="creategroup-visibility-checkbox">This group is visible to all</label>
+			</div>
+			<div class="ui fluid input top-marginned">
+				<input type="password" id="creategroup-key-input" placeholder="Pass Key"/>
+			</div>
+			<div class="ui red message">
+				Empty Passkey field makes the group public
+			</div>
+		</div>
+		<div class="actions">
+			<div class="ui large teal button" id="creategroup-modal-submit">
+				Create
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/jquery.min.js" type="text/javascript"></script>
+<script src="/semantic.min.js" type="text/javascript"></script>
+<script src="/home.js" type="text/javascript"></script>
+<script src="/perfect-scrollbar.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).on('click', "div[id^='settings-'][id$='-button']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+		$('#settings-' + groupId + '-container').show();
+		$('#settings-' + groupId + '-actioncontainer').show();
+	});
+
+	$(document).on('click', "div[id^='settings-'][id$='-doneaction']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+		$('#settings-' + groupId + '-container').hide();
+		$('#settings-' + groupId + '-actioncontainer').hide();
+	});
+
+	$(document).on('click', "div[id^='settings-'][id$='-saveaction']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+	});
+	$(document).on('click', "div[id^='addusers-'][id$='-button']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+		$('#addusers-' + groupId + '-actioncontainer').show();
+	});
+	$(document).on('click', "div[id^='blockusers-'][id$='-button']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+		$('#blockusers-' + groupId + '-actioncontainer').show();
+	});
+	$(document).on('click', "div[id^='addusers-'][id$='-doneaction']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+		$.ajax(
+	    {
+	    	type: 'POST',
+	    	url: '/groups/' + groupId + '/addusers',
+	    	data:
+	        {
+	        	'users': $('#addusers-' + groupId + '-input').val()
+	        },
+	    	success: function (data, status, jqXHR)
+	    	{
+	    		if (data.success)
+	    		{
+	    			$('#addusers-' + groupId + '-doneresponse').empty();
+	    			$('#addusers-' + groupId + '-doneresponse').append(data.message);
+	    			$('#addusers-' + groupId + '-doneresponse').show();
+	    		} else
+	    		{
+	    			$('#addusers-' + groupId + '-doneresponse').empty();
+	    			$('#addusers-' + groupId + '-doneresponse').append(data.message);
+					$('#addusers-' + groupId + '-doneresponse').show();
+	    		}
+	    	}
+	    });
+	});
+	$(document).on('click', "div[id^='blockusers-'][id$='-doneaction']", function ()
+	{
+		var groupId = $(this).attr('id').split('-')[1];
+		$.ajax(
+	    {
+	    	type: 'POST',
+	    	url: '/groups/' + groupId + '/blockusers',
+	    	data:
+	        {
+	        	'users': $('#blockusers-' + groupId + '-input').val()
+	        },
+	    	success: function (data, status, jqXHR)
+	    	{
+	    		if (data.success)
+	    		{
+	    			$('#blockusers-' + groupId + '-doneresponse').empty();
+	    			$('#blockusers-' + groupId + '-doneresponse').append(data.message);
+	    			$('#blockusers-' + groupId + '-doneresponse').show();
+	    		} else
+	    		{
+	    			$('#blockusers-' + groupId + '-doneresponse').empty();
+	    			$('#blockusers-' + groupId + '-doneresponse').append(data.message);
+					$('#blockusers-' + groupId + '-doneresponse').show();
+	    		}
+	    	}
+	    });
+	});
+</script>
