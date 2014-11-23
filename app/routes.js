@@ -510,8 +510,8 @@ module.exports = function (server)
 						}
 						if (docs.length > 0)
 						{
-							docs[0].accessibleGroups = [];
-							docs[0].accessibleGroups.push(newGroup._id.toString());
+							docs[0].authorizedInGroups = [];
+							docs[0].authorizedInGroups.push(newGroup._id.toString());
 							docs[0].save(function (err)
 							{
 								if (err)
