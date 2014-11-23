@@ -8,7 +8,7 @@ var groupsSchema = new schema({
 	passkey : {type: String},
 	isPrivate : {type: Boolean},
 	isVisible : {type: Boolean},
-	tags : [{type: String}],
+	tags : [{name: {type: String}}],
 	createdBy : {type: String},
 	createdOn : {type: Date, 'default': Date.now},
 	admins : [{type: String}],
